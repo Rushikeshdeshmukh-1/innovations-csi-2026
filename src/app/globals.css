@@ -1,26 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* ========== DESIGN TOKENS ========== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-deep: #040b18;
+  --accent-cyan: #00d4ff;
+  --accent-gold: #FFBE0B;
+  --accent-green: #00ff88;
+  --text-primary: #c8daf0;
+  --text-bright: #e8f0ff;
+  --text-muted: #4a6a90;
+  --font-header: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ========== GLOBAL BASE ========== */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #040b18 !important;
+    color: var(--text-primary);
+    font-family: var(--font-header);
+    cursor: none;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    cursor: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #040b18;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========== DEEP SPACE BACKGROUND ========== */
+.space-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url('/space-bg.png?v=5') center center / cover no-repeat;
+  background-color: #040b18;
+}
+
+/* Soft vignette — only darkens extreme edges, center stays clear */
+.space-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(4, 11, 24, 0.35) 85%, rgba(4, 11, 24, 0.65) 100%);
+  pointer-events: none;
+}
+
+/* ========== SUBTLE GRID OVERLAY ========== */
+.holo-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.4) 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.4) 10%, transparent 70%);
+}
+
+/* ========== SCI-FI HOLOGRAM PANEL ========== */
+.holo-panel {
+  background: rgba(4, 18, 50, 0.65);
+  border: 1px solid rgba(0, 212, 255, 0.18);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.05), inset 0 0 25px rgba(0, 212, 255, 0.02);
+}
+
+.holo-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.03) 40%, rgba(0, 212, 255, 0.06) 50%, rgba(0, 212, 255, 0.03) 60%, transparent 100%);
+  animation: scanSweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.holo-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(0, 212, 255, 0.35) 50%, transparent 90%);
+  pointer-events: none;
+}
+
+@keyframes scanSweep {
+  0% {
+    left: -100%;
+  }
+
+  50% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+/* ========== SCI-FI HUD CARD (Refined Hologram v2) ========== */
+.holo-hud-card {
+  position: relative;
+  /* Transparent blue background */
+  background:
+    /* Top-left corner bracket */
+    linear-gradient(135deg, var(--accent-cyan) 4px, transparent 0) top left,
+    /* Top-right corner bracket */
+    linear-gradient(225deg, var(--accent-cyan) 4px, transparent 0) top right,
+    /* Bottom-left corner bracket */
+    linear-gradient(45deg, var(--accent-cyan) 4px, transparent 0) bottom left,
+    /* Bottom-right corner bracket */
+    linear-gradient(315deg, var(--accent-cyan) 4px, transparent 0) bottom right,
+    /* Base fill */
+    rgba(4, 25, 50, 0.65);
+
+  background-size: 12px 12px, 12px 12px, 12px 12px, 12px 12px, 100% 100%;
+  background-repeat: no-repeat;
+
+  padding: 1.5rem;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+
+  /* Rounded corners */
+  border-radius: 12px;
+  /* Faint border */
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  /* Inner glow */
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.05), inset 0 0 30px rgba(0, 212, 255, 0.05);
+  backdrop-filter: blur(4px);
+}
+
+/* Remove old pseudo-elements */
+.holo-hud-card::before,
+.holo-hud-card::after {
+  content: none;
+  display: none;
+}
+
+/* Inner Layout Lines */
+.holo-hud-card .hud-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+  margin: 0.5rem 0;
+}
+
+/* ========== HOLOGRAM TEXT GLOW ========== */
+.holo-text {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 40px rgba(0, 212, 255, 0.2), 0 0 80px rgba(0, 212, 255, 0.08);
+}
+
+.gold-glow {
+  text-shadow: 0 0 10px rgba(255, 190, 11, 0.5), 0 0 40px rgba(255, 190, 11, 0.2);
+}
+
+/* ========== STATUS BADGES ========== */
+.badge-review {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.badge-pitching {
+  background: rgba(255, 190, 11, 0.1);
+  color: var(--accent-gold);
+  border: 1px solid rgba(255, 190, 11, 0.3);
+}
+
+.badge-shortlisted {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.badge-eliminated {
+  background: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+  border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+/* ========== GALLERY SCROLL ========== */
+.gallery-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 2rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-scroll::-webkit-scrollbar {
+  height: 2px;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.15);
+}
+
+.gallery-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* ========== UTILITY ANIMATIONS ========== */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ========== SECTION LABEL ========== */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  opacity: 0.4;
 }
