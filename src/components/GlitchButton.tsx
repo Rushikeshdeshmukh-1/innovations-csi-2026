@@ -6,9 +6,10 @@ interface GlitchButtonProps {
     label: string;
     href: string;
     onClick?: () => void;
+    variant?: string;
 }
 
-export default function GlitchButton({ label, href, onClick }: GlitchButtonProps) {
+export default function GlitchButton({ label, href, onClick, variant }: GlitchButtonProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -59,6 +60,21 @@ export default function GlitchButton({ label, href, onClick }: GlitchButtonProps
                     text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
                 }
 
+                /* GOLD VARIANT */
+                .glitch-btn.gold {
+                    border-color: #FFD700;
+                    color: #FFD700;
+                    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                }
+                .glitch-btn.gold:hover {
+                    background: rgba(255, 215, 0, 0.1);
+                    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.4);
+                }
+                .glitch-btn.gold .glitch-line-1, 
+                .glitch-btn.gold .glitch-line-2 {
+                    background: #FFD700;
+                }
+
                 .glitch-line-1, .glitch-line-2 {
                     position: absolute;
                     left: 0;
@@ -88,6 +104,10 @@ export default function GlitchButton({ label, href, onClick }: GlitchButtonProps
                     z-index: 1;
                 }
 
+                .glitch-btn.gold .btn-bg-slide {
+                    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+                }
+
                 .glitch-btn:hover .btn-bg-slide {
                     left: 100%;
                     transition: left 0.6s ease;
@@ -102,7 +122,7 @@ export default function GlitchButton({ label, href, onClick }: GlitchButtonProps
                 onMouseLeave={() => setIsHovered(false)}
                 style={{ textDecoration: 'none' }}
             >
-                <button className="glitch-btn">
+                <button className={`glitch-btn ${variant || ''}`}>
                     <span style={{ position: 'relative', zIndex: 2 }}>{label}</span>
                     <div className="btn-bg-slide" />
                     <div className="glitch-line-1" />
