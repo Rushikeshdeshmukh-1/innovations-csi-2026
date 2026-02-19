@@ -165,7 +165,7 @@ function TeamNotFound() {
                 href="/"
                 style={{ textDecoration: 'none' }}
             >
-                <GlitchButton label="RETURN TO HUB" />
+                <GlitchButton label="RETURN TO HUB" href="/" />
             </Link>
         </div>
     );
