@@ -284,6 +284,19 @@ export default function PortalPage() {
             <motion.div
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onTouchMove={(e) => {
+                    const touch = e.touches[0];
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const width = rect.width;
+                    const height = rect.height;
+                    const mouseX = touch.clientX - rect.left;
+                    const mouseY = touch.clientY - rect.top;
+                    const xPct = mouseX - width / 2;
+                    const yPct = mouseY - height / 2;
+                    x.set(xPct);
+                    y.set(yPct);
+                }}
+                onTouchEnd={handleMouseLeave}
                 initial={{ opacity: 0, rotateY: 90 }}
                 animate={{ opacity: 1, rotateY: 0 }}
                 transition={{ duration: 0.8, type: 'spring' }}

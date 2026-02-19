@@ -51,19 +51,29 @@ export default function Navbar() {
                 <img src="/csi-logo.png" alt="CSI Logo" style={{ height: '32px', width: 'auto' }} />
             </a>
 
-            {/* Navigation Links */}
-            <div style={{ display: 'flex', gap: '0.3rem' }}>
+            {/* Navigation Links - Scrollable on mobile */}
+            <div style={{
+                display: 'flex',
+                gap: '0.3rem',
+                overflowX: 'auto',
+                maxWidth: '100%',
+                paddingBottom: '4px', // Space for scrollbar if needed
+                scrollbarWidth: 'none', // Firefox
+                msOverflowStyle: 'none', // IE
+            }}>
                 {navLinks.map((link) => (
                     <a
                         key={link.label}
                         href={link.href}
                         style={{
-                            padding: '0.4rem 0.9rem',
+                            padding: '0.4rem 0.6rem',
                             color: 'var(--text-muted)',
                             textDecoration: 'none',
                             borderRadius: '4px',
                             border: '1px solid transparent',
                             transition: 'all 0.3s ease',
+                            whiteSpace: 'nowrap', // Prevent wrapping
+                            fontSize: '0.6rem', // Slightly smaller
                         }}
                         onMouseEnter={(e) => {
                             const el = e.currentTarget;
