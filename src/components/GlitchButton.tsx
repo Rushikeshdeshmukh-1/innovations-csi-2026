@@ -1,95 +1,134 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 
 interface GlitchButtonProps {
     label: string;
-    href?: string;
-    variant?: 'cyan' | 'gold';
+    href: string;
     onClick?: () => void;
+    variant?: string;
 }
 
-export default function GlitchButton({ label, href, variant = 'cyan', onClick }: GlitchButtonProps) {
-    const color = variant === 'gold' ? '#FFBE0B' : '#00d4ff';
-    const colorDim = variant === 'gold' ? 'rgba(255,190,11,0.15)' : 'rgba(0,212,255,0.15)';
-
-    const style: React.CSSProperties = {
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        padding: '0.7rem 2rem',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '0.72rem',
-        fontWeight: 600,
-        letterSpacing: '0.18em',
-        color: color,
-        background: colorDim,
-        border: `1px solid ${color}40`,
-        borderRadius: '2px',
-        textDecoration: 'none',
-        cursor: 'none',
-        transition: 'all 0.3s ease',
-        position: 'relative' as const,
-    };
-
-    const handleClick = (e: React.MouseEvent) => {
-        // Mechanical click sound
-        try {
-            const ctx = new AudioContext();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.frequency.setValueAtTime(800, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.08);
-            gain.gain.setValueAtTime(0.08, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.1);
-            setTimeout(() => ctx.close(), 200);
-        } catch {
-            // Audio may not be available
-        }
-        onClick?.();
-    };
-
-    const handleEnter = (e: React.MouseEvent) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.background = `${color}30`;
-        el.style.borderColor = `${color}80`;
-        el.style.boxShadow = `0 0 20px ${color}30, inset 0 0 20px ${color}08`;
-    };
-
-    const handleLeave = (e: React.MouseEvent) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.background = colorDim;
-        el.style.borderColor = `${color}40`;
-        el.style.boxShadow = 'none';
-    };
-
-    if (href) {
-        return (
-            <a
-                href={href}
-                style={style}
-                onClick={handleClick}
-                onMouseEnter={handleEnter}
-                onMouseLeave={handleLeave}
-            >
-                {label} <span style={{ fontSize: '0.85em' }}>↗</span>
-            </a>
-        );
-    }
+export default function GlitchButton({ label, href, onClick, variant }: GlitchButtonProps) {
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <button
-            type="submit"
-            style={style}
-            onClick={handleClick}
-            onMouseEnter={handleEnter}
-            onMouseLeave={handleLeave}
-        >
-            {label} <span style={{ fontSize: '0.85em' }}>↗</span>
-        </button>
+        <>
+            <style jsx global>{`
+                @keyframes glitchLineAnim {
+                    0% { opacity: 0; top: 10%; }
+                    50% { opacity: 1; top: 80%; }
+                    100% { opacity: 0; top: 10%; }
+                }
+                @keyframes glitchLineAnim2 {
+                    0% { opacity: 0; bottom: 10%; }
+                    50% { opacity: 1; bottom: 80%; }
+                    100% { opacity: 0; bottom: 10%; }
+                }
+
+                .glitch-btn-container {
+                     position: relative;
+                     display: inline-block;
+                }
+
+                .glitch-btn {
+                    position: relative;
+                    padding: 14px 40px;
+                    background: rgba(0, 26, 43, 0.6);
+                    border: 2px solid #00d4ff;
+                    color: #00d4ff;
+                    font-family: 'Courier New', monospace; /* Fallback */
+                    font-family: var(--font-mono, monospace);
+                    font-size: 1rem;
+                    font-weight: 700;
+                    letter-spacing: 0.15em;
+                    cursor: pointer;
+                    overflow: hidden;
+                    text-transform: uppercase;
+                    outline: none;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+                    text-decoration: none;
+                    display: inline-block;
+                    backdrop-filter: blur(4px);
+                }
+
+                .glitch-btn:hover {
+                    background: rgba(0, 212, 255, 0.1);
+                    color: #fff;
+                    box-shadow: 0 0 25px rgba(0, 212, 255, 0.6), inset 0 0 10px rgba(0, 212, 255, 0.4);
+                    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+                }
+
+                /* GOLD VARIANT */
+                .glitch-btn.gold {
+                    border-color: #FFD700;
+                    color: #FFD700;
+                    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+                }
+                .glitch-btn.gold:hover {
+                    background: rgba(255, 215, 0, 0.1);
+                    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(255, 215, 0, 0.4);
+                }
+                .glitch-btn.gold .glitch-line-1, 
+                .glitch-btn.gold .glitch-line-2 {
+                    background: #FFD700;
+                }
+
+                .glitch-line-1, .glitch-line-2 {
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    height: 2px;
+                    background: #00d4ff;
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+                .glitch-btn:hover .glitch-line-1 {
+                    animation: glitchLineAnim 1.5s infinite linear;
+                }
+
+                .glitch-btn:hover .glitch-line-2 {
+                    animation: glitchLineAnim2 2s infinite linear reverse;
+                }
+
+                .btn-bg-slide {
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+                    transition: left 0.4s ease;
+                    z-index: 1;
+                }
+
+                .glitch-btn.gold .btn-bg-slide {
+                    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+                }
+
+                .glitch-btn:hover .btn-bg-slide {
+                    left: 100%;
+                    transition: left 0.6s ease;
+                }
+            `}</style>
+
+            <a
+                href={href}
+                onClick={onClick}
+                className="glitch-btn-container"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                style={{ textDecoration: 'none' }}
+            >
+                <button className={`glitch-btn ${variant || ''}`}>
+                    <span style={{ position: 'relative', zIndex: 2 }}>{label}</span>
+                    <div className="btn-bg-slide" />
+                    <div className="glitch-line-1" />
+                    <div className="glitch-line-2" />
+                </button>
+            </a>
+        </>
     );
 }

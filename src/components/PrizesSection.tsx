@@ -5,225 +5,134 @@ import { motion } from 'framer-motion';
 const prizes = [
     {
         rank: '1ST',
-        title: 'Grand Champion',
-        amount: '₹50,000',
-        color: '#FFBE0B',
-        perks: ['Trophy & Certificate', 'Internship Opportunity', 'Mentorship Access', 'Event Feature Spotlight'],
+        prize: '₹30,000',
+        perks: ['Internship Opportunity', 'Swag Kit', 'Certificate of Excellence'],
+        color: '#FFD700', // Gold
+        glow: 'rgba(255, 215, 0, 0.4)',
     },
     {
         rank: '2ND',
-        title: 'Runner Up',
-        amount: '₹30,000',
-        color: '#C0C0C0',
-        perks: ['Trophy & Certificate', 'Course Vouchers', 'LinkedIn Endorsement'],
+        prize: '₹15,000',
+        perks: ['Swag Kit', 'Certificate of Excellence'],
+        color: '#C0C0C0', // Silver
+        glow: 'rgba(192, 192, 192, 0.4)',
     },
     {
         rank: '3RD',
-        title: 'Second Runner Up',
-        amount: '₹15,000',
-        color: '#CD7F32',
-        perks: ['Trophy & Certificate', 'Tech Swag Kit', 'Course Vouchers'],
+        prize: '₹5,000',
+        perks: ['Swag Kit', 'Certificate of Excellence'],
+        color: '#CD7F32', // Bronze
+        glow: 'rgba(205, 127, 50, 0.4)',
     },
-];
-
-const specialPrizes = [
-    { title: 'Best AI/ML Project', amount: '₹10,000', icon: '🧠' },
-    { title: 'Best UI/UX Design', amount: '₹10,000', icon: '🎨' },
-    { title: 'People\'s Choice', amount: '₹5,000', icon: '🗳️' },
-    { title: 'Best First-Year Team', amount: '₹5,000', icon: '🌱' },
 ];
 
 export default function PrizesSection() {
     return (
-        <section
-            id="prizes"
-            style={{
-                position: 'relative',
-                zIndex: 5,
-                padding: '6rem 2rem',
-                maxWidth: '1200px',
-                margin: '0 auto',
-            }}
-        >
-            <div className="section-label" style={{ marginBottom: '0.5rem' }}>
-                ◈ SECTION 03 — REWARD MATRIX
-            </div>
+        <section id="prizes" style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative', overflow: 'hidden' }}>
 
-            <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="holo-text"
-                style={{
-                    fontFamily: 'var(--font-header)',
-                    fontSize: 'clamp(1.8rem, 4vw, 3rem)',
-                    fontWeight: 700,
-                    color: 'var(--text-primary)',
-                    marginBottom: '3rem',
-                }}
-            >
-                PRIZES &{' '}
-                <span style={{ color: 'var(--accent-gold)' }}>REWARDS</span>
-            </motion.h2>
+            {/* Background Gradient */}
+            <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '80%',
+                height: '80%',
+                background: 'radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%)',
+                pointerEvents: 'none',
+                zIndex: 0
+            }} />
 
-            {/* Main prizes */}
-            <div
-                style={{
+            <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    style={{ textAlign: 'center', marginBottom: '4rem' }}
+                >
+                    <h2 style={{
+                        fontFamily: 'var(--font-header, sans-serif)',
+                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                        color: 'var(--text-bright, #fff)',
+                        textShadow: '0 0 20px rgba(0, 212, 255, 0.3)',
+                        marginBottom: '1rem',
+                    }}>
+                        PRIZE POOL
+                    </h2>
+                    <div style={{
+                        width: '100px',
+                        height: '4px',
+                        background: 'var(--accent-cyan, #00d4ff)',
+                        margin: '0 auto',
+                        borderRadius: '2px',
+                        boxShadow: '0 0 10px rgba(0, 212, 255, 0.5)'
+                    }} />
+                </motion.div>
+
+                <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '1.5rem',
-                    marginBottom: '3rem',
-                }}
-            >
-                {prizes.map((prize, i) => (
-                    <motion.div
-                        key={prize.rank}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.12, duration: 0.6 }}
-                        className="holo-hud-card"
-                        style={{
-                            textAlign: 'center',
-                            borderTop: `2px solid ${prize.color}80`,
-                            transition: 'all 0.4s ease',
-                        }}
-                        onMouseEnter={(e) => {
-                            const el = e.currentTarget;
-                            el.style.borderTopColor = `${prize.color}`;
-                            el.style.boxShadow = `0 0 40px ${prize.color}15, 0 -4px 20px ${prize.color}10`;
-                            el.style.transform = 'translateY(-6px)';
-                        }}
-                        onMouseLeave={(e) => {
-                            const el = e.currentTarget;
-                            el.style.borderTopColor = `${prize.color}80`;
-                            el.style.boxShadow = 'inset 0 0 20px rgba(0, 212, 255, 0.05)';
-                            el.style.transform = 'translateY(0)';
-                        }}
-                    >
-                        {/* Rank badge */}
-                        <div
-                            style={{
-                                display: 'inline-block',
-                                fontFamily: 'var(--font-mono)',
-                                fontSize: '0.65rem',
-                                fontWeight: 700,
-                                letterSpacing: '0.2em',
-                                padding: '0.3rem 1rem',
-                                borderRadius: '20px',
-                                background: `${prize.color}15`,
-                                border: `1px solid ${prize.color}30`,
-                                color: prize.color,
-                                marginBottom: '1rem',
-                            }}
-                        >
-                            {prize.rank} PLACE
-                        </div>
-
-                        <h3
-                            style={{
-                                fontFamily: 'var(--font-header)',
-                                fontSize: '1.3rem',
-                                fontWeight: 700,
-                                color: 'var(--text-primary)',
-                                marginBottom: '0.5rem',
-                            }}
-                        >
-                            {prize.title}
-                        </h3>
-
-                        <div
-                            style={{
-                                fontFamily: 'var(--font-header)',
-                                fontSize: '2.5rem',
-                                fontWeight: 700,
-                                color: prize.color,
-                                marginBottom: '1.5rem',
-                                textShadow: `0 0 30px ${prize.color}40`,
-                            }}
-                        >
-                            {prize.amount}
-                        </div>
-
-                        <div style={{ borderTop: '1px solid rgba(58,134,255,0.1)', paddingTop: '1rem' }}>
-                            {prize.perks.map((perk) => (
-                                <div
-                                    key={perk}
-                                    style={{
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '0.68rem',
-                                        color: 'var(--text-muted)',
-                                        padding: '0.3rem 0',
-                                        letterSpacing: '0.03em',
-                                    }}
-                                >
-                                    ◈ {perk}
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
-                ))}
-            </div>
-
-            {/* Special prizes */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-            >
-                <div
-                    style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.7rem',
-                        color: 'var(--accent-cyan)',
-                        letterSpacing: '0.15em',
-                        marginBottom: '1.5rem',
-                        opacity: 0.7,
-                    }}
-                >
-                    ◈ SPECIAL CATEGORY AWARDS
-                </div>
-
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                        gap: '1rem',
-                    }}
-                >
-                    {specialPrizes.map((sp, i) => (
+                    gap: '2rem',
+                    alignItems: 'end'
+                }}>
+                    {/* Re-ordering for visual hierarchy: 2nd, 1st, 3rd logic or just map */}
+                    {/* Let's swap to display 2nd, 1st, 3rd on large screens if possible, but grid is simpler */}
+                    {[prizes[1], prizes[0], prizes[2]].map((item, index) => (
                         <motion.div
-                            key={sp.title}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
+                            key={item.rank}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.5 + i * 0.08 }}
-                            className="holo-panel"
+                            transition={{ duration: 0.6, delay: index * 0.2 }}
                             style={{
-                                padding: '1.2rem 1.5rem',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '1rem',
-                                transition: 'border-color 0.3s',
+                                background: 'rgba(10, 20, 40, 0.6)',
+                                backdropFilter: 'blur(10px)',
+                                border: `1px solid ${item.color}`,
+                                borderRadius: '20px',
+                                padding: '2rem',
+                                textAlign: 'center',
+                                position: 'relative',
+                                transform: item.rank === '1ST' ? 'scale(1.05) translateY(-20px)' : 'none',
+                                boxShadow: `0 0 30px ${item.glow}, inset 0 0 20px rgba(0,0,0,0.5)`,
                             }}
-                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(58,134,255,0.3)'; }}
-                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(58,134,255,0.15)'; }}
                         >
-                            <span style={{ fontSize: '1.5rem' }}>{sp.icon}</span>
-                            <div>
-                                <div style={{ fontFamily: 'var(--font-header)', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                                    {sp.title}
-                                </div>
-                                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700 }}>
-                                    {sp.amount}
-                                </div>
+                            <div style={{
+                                fontSize: '4rem',
+                                fontWeight: 'bold',
+                                color: item.color,
+                                textShadow: `0 0 20px ${item.glow}`,
+                                marginBottom: '1rem',
+                                fontFamily: 'var(--font-header, sans-serif)'
+                            }}>
+                                {item.rank}
                             </div>
+                            <div style={{
+                                fontSize: '2.5rem',
+                                color: '#fff',
+                                marginBottom: '1.5rem',
+                                fontWeight: 'bold',
+                                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                            }}>
+                                {item.prize}
+                            </div>
+                            <ul style={{
+                                listStyle: 'none',
+                                padding: 0,
+                                color: 'var(--text-muted, #aaa)',
+                                fontSize: '0.9rem',
+                                lineHeight: '1.8'
+                            }}>
+                                {item.perks.map((perk, i) => (
+                                    <li key={i} style={{ borderBottom: i < item.perks.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none', padding: '0.5rem 0' }}>
+                                        {perk}
+                                    </li>
+                                ))}
+                            </ul>
                         </motion.div>
                     ))}
                 </div>
-            </motion.div>
+            </div>
         </section>
     );
 }

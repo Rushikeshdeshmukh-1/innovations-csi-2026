@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -207,6 +207,15 @@ function HudPanel({ children, style, delay = 0 }: { children: React.ReactNode; s
 }
 
 export default function HeroSection() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <section
             id="hero"
@@ -219,6 +228,7 @@ export default function HeroSection() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 overflow: 'hidden',
+                // Background handled globally in layout/globals.css
             }}
         >
             {/* 3D Canvas — CSS filter gives lines a subtle radiant glow */}
@@ -233,8 +243,8 @@ export default function HeroSection() {
                     gl={{ alpha: true, antialias: true }}
                     style={{ background: 'transparent' }}
                 >
-                    {/* Increased gear scale to 0.85 as requested to fill screen without touching edges */}
-                    <group scale={0.85}>
+                    {/* Gear scale reduced to 0.80 as requested */}
+                    <group scale={0.80}>
                         <GearWireframe />
                     </group>
                     <OrbitControls
@@ -262,7 +272,7 @@ export default function HeroSection() {
                     style={{ marginBottom: '1.5rem' }}
                 >
                     {/* Using standard img tag for simplicity in this file setup, next/image would require configuration for external domains if any */}
-                    <img src="/csi-logo.png" alt="CSI Logo" style={{ width: '180px', height: 'auto', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.3))' }} />
+                    <img src="/csi-logo.png" alt="CSI Logo" style={{ width: isMobile ? '120px' : '180px', height: 'auto', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.3))' }} />
                 </motion.div>
 
                 <motion.div
@@ -271,10 +281,11 @@ export default function HeroSection() {
                     transition={{ delay: 2.8, duration: 1 }}
                     style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: '0.55rem',
-                        letterSpacing: '0.35em',
+                        fontSize: isMobile ? '0.45rem' : '0.55rem',
+                        letterSpacing: isMobile ? '0.25em' : '0.35em',
                         color: 'var(--accent-cyan)',
                         marginBottom: '0.8rem',
+                        textShadow: '0 2px 4px rgba(0,0,0,0.8)', // Added for visibility
                     }}
                 >
                     ◈ CSI SIES GST PRESENTS ◈
@@ -287,12 +298,13 @@ export default function HeroSection() {
                     className="holo-text"
                     style={{
                         fontFamily: 'var(--font-header)',
-                        fontSize: 'clamp(2.5rem, 8vw, 6rem)',
+                        fontSize: 'clamp(2rem, 8vw, 6rem)',
                         fontWeight: 700,
                         letterSpacing: '0.05em',
                         color: 'var(--text-bright)',
                         lineHeight: 1.1,
                         marginBottom: '1rem',
+                        textShadow: '0 4px 8px rgba(0,0,0,0.9)', // Added/Enhanced for visibility
                     }}
                 >
                     INNOVATIONS
@@ -300,93 +312,113 @@ export default function HeroSection() {
 
                 <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.6 }}
+                    animate={{ opacity: 0.8 }} // Increased opacity for visibility
                     transition={{ delay: 3.4, duration: 0.8 }}
                     style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: '0.65rem',
+                        fontSize: isMobile ? '0.55rem' : '0.65rem',
                         letterSpacing: '0.18em',
-                        color: 'var(--text-muted)',
+                        color: 'var(--text-primary)', // Lighter color for better visibility
                         marginBottom: '2.5rem',
+                        padding: '0 1rem',
+                        lineHeight: 1.6,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0, 212, 255, 0.3)', // Enhanced shadow and glow
+                        fontWeight: 700, // Bold
                     }}
                 >
                     SYSTEM STATUS:{' '}
                     <span style={{ color: '#00ff88' }}>OPTIMAL</span>
-                    {' | '}DATA STREAM:{' '}
+                    {isMobile ? <br /> : ' | '}
+                    DATA STREAM:{' '}
                     <span style={{ color: 'var(--accent-gold)' }}>ACTIVE</span>
-                    {' | '}BUILD: 2045.10.27_A
+                    {isMobile ? <br /> : ' | '}
+                    BUILD: 2045.10.27_A
                 </motion.div>
 
+                {/* Buttons Container */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 3.8, duration: 0.8 }}
-                    style={{ pointerEvents: 'auto' }}
+                    style={{
+                        pointerEvents: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '1.5rem',
+                        marginTop: '2rem'
+                    }}
                 >
+                    {/* Launch Simulation Button */}
                     <GlitchButton label="LAUNCH SIMULATION" href="#about" />
                 </motion.div>
             </div>
 
-            {/* LEFT HUD panels */}
-            <HudPanel delay={0.5} style={{ position: 'absolute', left: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◎ ENERGY FLUX</div>
-                <div>NODES: <span style={{ color: 'var(--text-primary)' }}>847</span></div>
-                <div>FREQ: <span style={{ color: 'var(--text-primary)' }}>2.4GHz</span></div>
-                <div>LOAD: <span style={{ color: '#00ff88' }}>34%</span></div>
-                <div style={{ marginTop: '0.4rem', display: 'flex', gap: '2px' }}>
-                    {Array.from({ length: 8 }).map((_, i) => (
-                        <div key={i} style={{ width: '11px', height: '3px', background: i < 6 ? 'var(--accent-cyan)' : 'rgba(0,212,255,0.12)', borderRadius: '1px' }} />
-                    ))}
-                </div>
-            </HudPanel>
-
-            <HudPanel delay={0.8} style={{ position: 'absolute', left: '1.5rem', top: '42%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◈ RESONANCE</div>
-                <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7 }}>
-                    <polyline points="0,18 10,13 20,20 30,6 40,16 50,10 60,22 70,8 80,18 90,3 100,13 110,8 120,16" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.3" />
-                </svg>
-            </HudPanel>
-
-            <HudPanel delay={1.1} style={{ position: 'absolute', left: '1.5rem', bottom: '22%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◎ PROJECTS</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px 8px', fontSize: '0.52rem' }}>
-                    <span>AI/ML</span><span style={{ color: 'var(--text-primary)' }}>12</span>
-                    <span>IoT</span><span style={{ color: 'var(--text-primary)' }}>8</span>
-                    <span>Web3</span><span style={{ color: 'var(--text-primary)' }}>6</span>
-                    <span>Cyber</span><span style={{ color: 'var(--text-primary)' }}>9</span>
-                </div>
-            </HudPanel>
-
-            {/* RIGHT HUD panels */}
-            <HudPanel delay={0.6} style={{ position: 'absolute', right: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◎ METRICS</div>
-                <div>CPU: <span style={{ color: 'var(--text-primary)' }}>67.8%</span></div>
-                <div>MEM: <span style={{ color: 'var(--text-primary)' }}>94.2%</span></div>
-                <div>LAT: <span style={{ color: 'var(--text-primary)' }}>19.07°N</span></div>
-                <div>UPTIME: <span style={{ color: '#00ff88' }}>99.97%</span></div>
-            </HudPanel>
-
-            <HudPanel delay={0.9} style={{ position: 'absolute', right: '1.5rem', top: '45%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◈ DATA</div>
-                <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7 }}>
-                    <polyline points="0,13 12,18 24,8 36,15 48,5 60,20 72,10 84,14 96,4 108,12 120,9" fill="none" stroke="var(--accent-gold)" strokeWidth="1" />
-                </svg>
-            </HudPanel>
-
-            <HudPanel delay={1.2} style={{ position: 'absolute', right: '1.5rem', bottom: '22%', width: '150px', zIndex: 3 }}>
-                <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem' }}>◎ PROGRESS</div>
-                {['AI/ML', 'Web3'].map((label, i) => (
-                    <div key={label} style={{ marginBottom: '0.3rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', marginBottom: '2px' }}>
-                            <span>{label}</span>
-                            <span style={{ color: 'var(--text-primary)' }}>{[82, 64][i]}%</span>
+            {/* HUD PANELS - HIDDEN ON MOBILE */}
+            {!isMobile && (
+                <>
+                    {/* LEFT HUD panels */}
+                    <HudPanel delay={0.5} style={{ position: 'absolute', left: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ REGISTRATIONS</div>
+                        <div>COUNT: <span style={{ color: 'var(--text-primary)', fontWeight: 'bold', textShadow: '0 1px 2px black' }}>847</span></div>
+                        <div>STATUS: <span style={{ color: '#00ff88', textShadow: '0 1px 2px black' }}>OPEN</span></div>
+                        <div style={{ marginTop: '0.4rem', display: 'flex', gap: '2px' }}>
+                            {Array.from({ length: 8 }).map((_, i) => (
+                                <div key={i} style={{ width: '11px', height: '3px', background: i < 6 ? 'var(--accent-cyan)' : 'rgba(0,212,255,0.12)', borderRadius: '1px' }} />
+                            ))}
                         </div>
-                        <div style={{ height: '2px', background: 'rgba(0,212,255,0.1)', borderRadius: '1px' }}>
-                            <div style={{ height: '100%', width: `${[82, 64][i]}%`, background: i === 0 ? 'var(--accent-cyan)' : 'var(--accent-gold)', borderRadius: '1px' }} />
+                    </HudPanel>
+
+                    <HudPanel delay={0.8} style={{ position: 'absolute', left: '1.5rem', top: '42%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ DEADLINE</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-bright)', textShadow: '0 1px 2px black' }}>OCT 25</div>
+                        <div style={{ fontSize: '0.5rem', color: 'var(--text-muted)', textShadow: '0 1px 2px black' }}>23:59 IST</div>
+                        <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '5px' }}>
+                            <polyline points="0,18 10,13 20,20 30,6 40,16 50,10 60,22 70,8 80,18 90,3 100,13 110,8 120,16" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.3" />
+                        </svg>
+                    </HudPanel>
+
+                    <HudPanel delay={1.1} style={{ position: 'absolute', left: '1.5rem', bottom: '22%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ CATEGORIES</div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px 8px', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>
+                            <span>SOFTWARE</span><span style={{ color: 'var(--text-primary)' }}>12</span>
+                            <span>HARDWARE</span><span style={{ color: 'var(--text-primary)' }}>8</span>
+                            <span>OPEN</span><span style={{ color: 'var(--text-primary)' }}>6</span>
                         </div>
-                    </div>
-                ))}
-            </HudPanel>
+                    </HudPanel>
+
+                    {/* RIGHT HUD panels */}
+                    <HudPanel delay={0.6} style={{ position: 'absolute', right: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ TEAM INFO</div>
+                        <div>SIZE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>2-4 Members</span></div>
+                        <div>MODE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>Hybrid</span></div>
+                        <div>ELIGIBILITY: <span style={{ color: '#00ff88', textShadow: '0 1px 2px black' }}>All Years</span></div>
+                    </HudPanel>
+
+                    <HudPanel delay={0.9} style={{ position: 'absolute', right: '1.5rem', top: '45%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ PRIZE POOL</div>
+                        <div style={{ fontSize: '0.9rem', color: '#00ff88', fontWeight: 'bold', textShadow: '0 1px 2px black' }}>₹50,000+</div>
+                        <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '5px' }}>
+                            <polyline points="0,13 12,18 24,8 36,15 48,5 60,20 72,10 84,14 96,4 108,12 120,9" fill="none" stroke="var(--accent-gold)" strokeWidth="1" />
+                        </svg>
+                    </HudPanel>
+
+                    <HudPanel delay={1.2} style={{ position: 'absolute', right: '1.5rem', bottom: '22%', width: '150px', zIndex: 3 }}>
+                        <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ ROUNDS</div>
+                        {['Round 1 (Online)', 'Round 2 (Offline)'].map((label, i) => (
+                            <div key={label} style={{ marginBottom: '0.3rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', marginBottom: '2px', textShadow: '0 1px 2px black' }}>
+                                    <span>{label}</span>
+                                    <span style={{ color: 'var(--text-primary)' }}>Pending</span>
+                                </div>
+                                <div style={{ height: '2px', background: 'rgba(0,212,255,0.1)', borderRadius: '1px' }}>
+                                    <div style={{ height: '100%', width: `${[100, 0][i]}%`, background: i === 0 ? 'var(--accent-cyan)' : 'var(--accent-gold)', borderRadius: '1px' }} />
+                                </div>
+                            </div>
+                        ))}
+                    </HudPanel>
+                </>
+            )}
 
             {/* Bottom gradient fade */}
             <div

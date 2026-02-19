@@ -24,6 +24,7 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
@@ -63,7 +64,7 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: url('/space-bg.png?v=5') center center / cover no-repeat;
+  background: url('/bg-optimized.jpg') center center / cover no-repeat;
   background-color: #040b18;
 }
 
