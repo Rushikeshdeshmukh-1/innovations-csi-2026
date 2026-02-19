@@ -28,7 +28,7 @@ export default function QRGeneratorPage() {
                     Ensure "Background graphics" is enabled in print settings.
                 </p>
                 <div onClick={() => window.print()}>
-                    <GlitchButton label="PRINT CARDS" href="#" />
+                    <GlitchButton label="PRINT CARDS" href="#" variant="gold" />
                 </div>
             </div>
 

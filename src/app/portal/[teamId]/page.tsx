@@ -403,7 +403,7 @@ export default function PortalPage() {
                             {team.presentationUrl && (
                                 <GlitchButton label="SLIDES" href={team.presentationUrl} />
                             )}
-                            <GlitchButton label="CONTACT" onClick={() => alert('Organizer Signal Sent!')} variant="gold" />
+                            <GlitchButton label="CONTACT" onClick={() => alert('Organizer Signal Sent!')} variant="gold" href="#" />
                         </div>
                         <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.5rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>
                             AUTHORIZED ACCESS ONLY • SECURE CONNECTION
