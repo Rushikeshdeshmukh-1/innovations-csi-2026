@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import { useLeaderboardStore, Team } from '@/store/leaderboardStore';
 import GlitchButton from '@/components/GlitchButton';
@@ -178,6 +178,34 @@ export default function PortalPage() {
     const [team, setTeam] = useState<Team | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
+    // 3D Tilt Logic - MOVED TO TOP to fix Hook Error
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    const rotateX = useTransform(y, [-300, 300], [15, -15]);
+    const rotateY = useTransform(x, [-300, 300], [-15, 15]);
+
+    // Smooth spring physics for rotation
+    const springConfig = { damping: 20, stiffness: 100 };
+    const springRotateX = useSpring(rotateX, springConfig);
+    const springRotateY = useSpring(rotateY, springConfig);
+
+    function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+        const xPct = mouseX - width / 2;
+        const yPct = mouseY - height / 2;
+        x.set(xPct);
+        y.set(yPct);
+    }
+
+    function handleMouseLeave() {
+        x.set(0);
+        y.set(0);
+    }
+
     useEffect(() => {
         // Simulate fetch delay (swap with real DB call later)
         const timer = setTimeout(() => {
@@ -217,6 +245,8 @@ export default function PortalPage() {
         Eliminated: '#ff3b30',
     };
 
+
+
     return (
         <div
             style={{
@@ -226,6 +256,7 @@ export default function PortalPage() {
                 margin: '0 auto',
                 position: 'relative',
                 zIndex: 5,
+                perspective: '1200px', // Detailed perspective for 3D
             }}
         >
             {/* Back link */}
@@ -249,200 +280,144 @@ export default function PortalPage() {
                 ← RETURN TO MAIN SCHEMATIC
             </Link>
 
-            {/* Team header */}
+            {/* ID Card Wrapper for Tilt Event */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="blueprint-panel blueprint-corners"
-                style={{ borderRadius: '8px', padding: '2rem', marginBottom: '2rem' }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                initial={{ opacity: 0, rotateY: 90 }}
+                animate={{ opacity: 1, rotateY: 0 }}
+                transition={{ duration: 0.8, type: 'spring' }}
+                style={{
+                    width: '100%',
+                    maxWidth: '450px',
+                    margin: '0 auto',
+                    position: 'relative',
+                    aspectRatio: '3/5',
+                    transformStyle: 'preserve-3d', // Enable 3D children
+                    rotateX: springRotateX,
+                    rotateY: springRotateY,
+                }}
             >
-                <div className="section-label" style={{ marginBottom: '0.5rem' }}>
-                    ◈ TEAM PORTAL — {team.id.toUpperCase()}
-                </div>
-
-                <h1
-                    style={{
-                        fontFamily: 'var(--font-header)',
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                        fontWeight: 700,
-                        color: 'var(--text-primary)',
-                        marginBottom: '0.5rem',
-                    }}
-                >
-                    {team.projectName}
-                </h1>
-
+                {/* The Card Itself */}
                 <div
+                    className="holo-hud-card"
                     style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.8rem',
-                        color: 'var(--text-muted)',
-                        marginBottom: '1rem',
-                        letterSpacing: '0.1em',
+                        width: '100%',
+                        height: '100%',
+                        padding: '0',
+                        overflow: 'hidden',
+                        background: 'rgba(4, 25, 50, 0.85)',
+                        boxShadow: '0 0 50px rgba(0, 212, 255, 0.15)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        // Backface hidden? kept visible for glass effect
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)', // GPU
                     }}
                 >
-                    BY {team.teamName.toUpperCase()}
-                </div>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
-                    {/* Status */}
+                    {/* Header Status Bar (Parallax Z=20) */}
                     <div
                         style={{
-                            padding: '0.4rem 1rem',
-                            borderRadius: '4px',
-                            background: `${statusColors[team.status]}15`,
-                            border: `1px solid ${statusColors[team.status]}40`,
-                            color: statusColors[team.status],
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.7rem',
-                            fontWeight: 600,
-                            letterSpacing: '0.1em',
+                            padding: '1rem',
+                            background: 'linear-gradient(90deg, rgba(0,212,255,0.1), transparent)',
+                            borderBottom: '1px solid rgba(0,212,255,0.3)',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            transform: 'translateZ(20px)',
                         }}
                     >
-                        ◉ {team.status.toUpperCase()}
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent-cyan)' }}>
+                            ID: {team.id.toUpperCase()}
+                        </div>
+                        <div style={{
+                            width: '8px', height: '8px',
+                            background: team.status === 'Shortlisted' ? '#00ff88' : team.status === 'Eliminated' ? '#ff3b30' : 'var(--accent-gold)',
+                            borderRadius: '50%',
+                            boxShadow: `0 0 10px ${team.status === 'Shortlisted' ? '#00ff88' : 'var(--accent-gold)'}`
+                        }} />
                     </div>
 
-                    {/* Category */}
-                    <div
-                        style={{
-                            padding: '0.4rem 1rem',
-                            borderRadius: '4px',
-                            background: 'rgba(58,134,255,0.08)',
-                            border: '1px solid rgba(58,134,255,0.2)',
+                    {/* Main Content (Parallax Z=40) */}
+                    <div style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', transform: 'translateZ(40px)' }}>
+
+                        {/* Holographic Avatar Placeholder */}
+                        <div style={{
+                            width: '100px', height: '100px', margin: '0 auto 1.5rem',
+                            borderRadius: '50%',
+                            border: '2px dashed var(--accent-cyan)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            fontSize: '2rem',
                             color: 'var(--accent-cyan)',
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.7rem',
-                            letterSpacing: '0.1em',
-                        }}
-                    >
-                        {team.category}
+                            background: 'rgba(0,212,255,0.05)',
+                            boxShadow: '0 0 20px rgba(0,212,255,0.2)',
+                            transform: 'translateZ(20px)', // Extra pop
+                        }}>
+                            {team.teamName.charAt(0)}
+                        </div>
+
+                        <h1 style={{
+                            fontFamily: 'var(--font-header)', fontSize: '2rem', fontWeight: 700, color: '#fff',
+                            marginBottom: '0.5rem', textShadow: '0 0 10px rgba(255,255,255,0.3)'
+                        }}>
+                            {team.projectName}
+                        </h1>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--accent-cyan)', marginBottom: '2rem', letterSpacing: '0.1em' }}>
+                            {team.teamName.toUpperCase()}
+                        </div>
+
+                        {/* Stats Grid */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
+                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>ROOM</div>
+                                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.roomNumber || 'TBA'}</div>
+                            </div>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
+                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>SCORE</div>
+                                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.score}</div>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>STATUS:</span>
+                            <span style={{ fontSize: '0.7rem', color: statusColors[team.status], fontWeight: 700, letterSpacing: '0.1em' }}>{team.status.toUpperCase()}</span>
+                        </div>
                     </div>
 
-                    {/* Score */}
-                    <div
+                    {/* Footer Actions (Parallax Z=30) */}
+                    <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(0,212,255,0.15)', background: 'rgba(0,0,0,0.2)', transform: 'translateZ(30px)' }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                            {team.presentationUrl && (
+                                <GlitchButton label="SLIDES" href={team.presentationUrl} />
+                            )}
+                            <GlitchButton label="CONTACT" onClick={() => alert('Organizer Signal Sent!')} variant="gold" />
+                        </div>
+                        <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.5rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>
+                            AUTHORIZED ACCESS ONLY • SECURE CONNECTION
+                        </div>
+                    </div>
+
+                    {/* Scanning Line Animation (Z=5) */}
+                    <motion.div
                         style={{
-                            padding: '0.4rem 1rem',
-                            borderRadius: '4px',
-                            background: 'rgba(255,190,11,0.08)',
-                            border: '1px solid rgba(255,190,11,0.2)',
-                            color: 'var(--accent-gold)',
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.7rem',
-                            fontWeight: 700,
-                            letterSpacing: '0.1em',
+                            position: 'absolute', left: 0, right: 0, height: '2px', background: 'rgba(0,212,255,0.5)',
+                            boxShadow: '0 0 15px rgba(0,212,255,0.8)',
+                            zIndex: 10,
+                            transform: 'translateZ(5px)'
                         }}
-                    >
-                        SCORE: {team.score}
-                    </div>
+                        animate={{ top: ['0%', '100%', '0%'] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                    />
                 </div>
-
-                {/* Team leads */}
-                <div
-                    style={{
-                        marginTop: '1.5rem',
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.75rem',
-                        color: 'var(--text-muted)',
-                        letterSpacing: '0.1em',
-                    }}
-                >
-                    <span style={{ opacity: 0.5 }}>TEAM LEADS:</span>{' '}
-                    <span style={{ color: 'var(--text-primary)' }}>{team.leads.join(' | ')}</span>
-                </div>
-
-                {team.timeSlot && (
-                    <div
-                        style={{
-                            marginTop: '0.5rem',
-                            fontFamily: 'var(--font-mono)',
-                            fontSize: '0.75rem',
-                            color: 'var(--text-muted)',
-                            letterSpacing: '0.1em',
-                        }}
-                    >
-                        <span style={{ opacity: 0.5 }}>TIME SLOT:</span>{' '}
-                        <span style={{ color: 'var(--accent-gold)' }}>{team.timeSlot}</span>
-                    </div>
-                )}
             </motion.div>
 
-            {/* Room Map */}
+            {/* Map Below Card */}
             {team.roomNumber && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    style={{ marginBottom: '2rem' }}
-                >
+                <div style={{ marginTop: '3rem', maxWidth: '450px', margin: '3rem auto 0' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '0.8rem', opacity: 0.7 }}>LOCATION DATA</div>
                     <RoomMap roomNumber={team.roomNumber} />
-                </motion.div>
-            )}
-
-            {/* Action buttons row */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '1rem',
-                    marginBottom: '2rem',
-                }}
-            >
-                {/* Call organizer */}
-                <GlitchButton
-                    label="CALL ORGANIZER"
-                    variant="gold"
-                    onClick={() => {
-                        alert('📡 Webhook triggered! An organizer will be with you shortly.\n\n(In production, this sends a POST to Discord/Slack)');
-                    }}
-                />
-
-                {/* Digital kit links */}
-                {team.presentationUrl && (
-                    <GlitchButton
-                        label="PRESENTATION"
-                        href={team.presentationUrl}
-                    />
-                )}
-
-                {team.certificateUrl && (
-                    <GlitchButton
-                        label="CERTIFICATE"
-                        href={team.certificateUrl}
-                    />
-                )}
-            </motion.div>
-
-            {/* Technical info panel */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                style={{
-                    background: 'rgba(13,26,58,0.5)',
-                    border: '1px solid rgba(28,37,65,0.5)',
-                    borderRadius: '8px',
-                    padding: '1.5rem',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.65rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.1em',
-                    lineHeight: 2,
-                }}
-            >
-                <div style={{ opacity: 0.5, marginBottom: '0.5rem' }}>◈ TECHNICAL METADATA</div>
-                <div>TEAM_ID: {team.id}</div>
-                <div>POSITION: #{team.position}</div>
-                <div>ROOM: {team.roomNumber || 'N/A'}</div>
-                <div>SLOT: {team.timeSlot || 'N/A'}</div>
-                <div>CATEGORY: {team.category}</div>
-                <div style={{ marginTop: '0.5rem', opacity: 0.3 }}>
-                    BUILD: 2045.10.27_A | PORTAL_VERSION: 1.0.0
                 </div>
-            </motion.div>
+            )}
         </div>
     );
 }

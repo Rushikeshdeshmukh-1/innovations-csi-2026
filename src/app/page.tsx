@@ -21,12 +21,6 @@ export default function Home() {
   return (
     <>
       <LoadingScreen />
-      <CustomCursor />
-
-      {/* Space background image */}
-      <div className="space-bg" />
-      {/* Subtle grid overlay */}
-      <div className="holo-grid" />
 
       <Navbar />
 

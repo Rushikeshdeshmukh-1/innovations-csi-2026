@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "INNOVATIONS — CSI SIES GST",
@@ -21,6 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <CustomCursor />
+        {/* Space background image */}
+        <div className="space-bg" />
+        {/* Subtle grid overlay */}
+        <div className="holo-grid" />
         {children}
       </body>
     </html>
