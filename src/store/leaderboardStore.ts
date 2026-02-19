@@ -25,7 +25,7 @@ interface LeaderboardState {
 
 const mockTeams: Team[] = [
     {
-        id: 'team-alpha',
+        id: 'team-9f8a7b', // Secure ID
         position: 1,
         teamName: 'Circuit Breakers',
         projectName: 'NeuroLink AI',
@@ -39,7 +39,7 @@ const mockTeams: Team[] = [
         certificateUrl: '#',
     },
     {
-        id: 'team-beta',
+        id: 'team-3c2d1e',
         position: 2,
         teamName: 'Quantum Flux',
         projectName: 'EcoSense IoT',
@@ -51,7 +51,7 @@ const mockTeams: Team[] = [
         timeSlot: '14:30 - 15:00',
     },
     {
-        id: 'team-gamma',
+        id: 'team-7x6y5z',
         position: 3,
         teamName: 'Binary Storm',
         projectName: 'CryptoShield',
@@ -63,7 +63,7 @@ const mockTeams: Team[] = [
         timeSlot: '15:00 - 15:30',
     },
     {
-        id: 'team-delta',
+        id: 'team-1a2b3c',
         position: 4,
         teamName: 'Pixel Pioneers',
         projectName: 'MediVision AR',
@@ -75,7 +75,7 @@ const mockTeams: Team[] = [
         timeSlot: '15:30 - 16:00',
     },
     {
-        id: 'team-epsilon',
+        id: 'team-4d5e6f',
         position: 5,
         teamName: 'Code Alchemists',
         projectName: 'GreenGrid',
@@ -87,7 +87,7 @@ const mockTeams: Team[] = [
         timeSlot: '16:00 - 16:30',
     },
     {
-        id: 'team-zeta',
+        id: 'team-8g9h0i',
         position: 6,
         teamName: 'Neural Nets',
         projectName: 'DroneHive',
@@ -99,7 +99,7 @@ const mockTeams: Team[] = [
         timeSlot: '16:30 - 17:00',
     },
     {
-        id: 'team-eta',
+        id: 'team-2j3k4l',
         position: 7,
         teamName: 'Stack Overflow',
         projectName: 'EduChain',
@@ -109,7 +109,7 @@ const mockTeams: Team[] = [
         leads: ['Manish Tiwari', 'Riya Das'],
     },
     {
-        id: 'team-theta',
+        id: 'team-5m6n7o',
         position: 8,
         teamName: 'Cyber Sentinels',
         projectName: 'AgriBot Pro',
