@@ -187,9 +187,17 @@ function GearWireframe() {
 function HudPanel({ children, style, delay = 0 }: { children: React.ReactNode; style: React.CSSProperties; delay?: number }) {
     return (
         <motion.div
-            initial={{ opacity: 0, x: style.left ? -20 : 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: delay + 3, duration: 0.8, ease: 'easeOut' }}
+            initial={{ opacity: 0, scaleX: 0.05, height: 2 }}
+            animate={{ opacity: 1, scaleX: 1, height: 'auto' }}
+            transition={{
+                opacity: { delay: delay + 2.8, duration: 0.1 },
+                scaleX: { delay: delay + 2.8, duration: 0.2, ease: 'easeOut' },
+                height: { delay: delay + 3.0, duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+            }}
+            whileHover={{
+                x: [0, -2, 2, -1, 1, 0],
+                boxShadow: '0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 15px rgba(0, 212, 255, 0.1)'
+            }}
             className="holo-panel"
             style={{
                 padding: '0.7rem 0.9rem',
@@ -198,10 +206,23 @@ function HudPanel({ children, style, delay = 0 }: { children: React.ReactNode; s
                 color: 'var(--text-muted)',
                 letterSpacing: '0.08em',
                 lineHeight: 1.8,
+                overflow: 'hidden',
                 ...style,
             }}
         >
-            {children}
+            <motion.div
+                initial={{ opacity: 0, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, filter: 'blur(0px)' }}
+                transition={{ delay: delay + 3.4, duration: 0.4 }}
+            >
+                <motion.div
+                    initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                    animate={{ clipPath: 'inset(0 0% 0 0)' }}
+                    transition={{ delay: delay + 3.4, duration: 0.6, ease: 'linear' }}
+                >
+                    {children}
+                </motion.div>
+            </motion.div>
         </motion.div>
     );
 }
@@ -269,23 +290,24 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 2.5, duration: 0.8 }}
-                    style={{ marginBottom: '1.5rem' }}
+                    style={{ marginBottom: isMobile ? '1rem' : '1.5rem' }}
                 >
                     {/* Using standard img tag for simplicity in this file setup, next/image would require configuration for external domains if any */}
-                    <img src="/csi-logo.png" alt="CSI Logo" style={{ width: isMobile ? '120px' : '180px', height: 'auto', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.3))' }} />
+                    <img src="/csi-logo.png" alt="CSI Logo" style={{ width: isMobile ? '130px' : '180px', height: 'auto', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' }} />
                 </motion.div>
 
                 <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.45 }}
+                    animate={{ opacity: 1 }} // Increased to 1 for full visibility
                     transition={{ delay: 2.8, duration: 1 }}
                     style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: isMobile ? '0.45rem' : '0.55rem',
-                        letterSpacing: isMobile ? '0.25em' : '0.35em',
-                        color: 'var(--accent-cyan)',
+                        fontSize: isMobile ? '0.75rem' : '0.85rem',
+                        letterSpacing: isMobile ? '0.15em' : '0.35em',
+                        color: 'var(--text-bright, #fff)', // Changed to bright white
                         marginBottom: '0.8rem',
-                        textShadow: '0 2px 4px rgba(0,0,0,0.8)', // Added for visibility
+                        textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 12px rgba(0,212,255,0.6)', // Stronger shadow + cyan glow
+                        fontWeight: 700,
                     }}
                 >
                     ◈ CSI SIES GST PRESENTS ◈
@@ -298,7 +320,7 @@ export default function HeroSection() {
                     className="holo-text"
                     style={{
                         fontFamily: 'var(--font-header)',
-                        fontSize: 'clamp(2rem, 8vw, 6rem)',
+                        fontSize: isMobile ? '3.5rem' : 'clamp(3rem, 10vw, 7rem)',
                         fontWeight: 700,
                         letterSpacing: '0.05em',
                         color: 'var(--text-bright)',
@@ -312,25 +334,25 @@ export default function HeroSection() {
 
                 <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.8 }} // Increased opacity for visibility
+                    animate={{ opacity: 1 }} // Increased opacity for visibility
                     transition={{ delay: 3.4, duration: 0.8 }}
                     style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: isMobile ? '0.55rem' : '0.65rem',
-                        letterSpacing: '0.18em',
-                        color: 'var(--text-primary)', // Lighter color for better visibility
+                        fontSize: isMobile ? '0.8rem' : '0.85rem',
+                        letterSpacing: isMobile ? '0.1em' : '0.18em',
+                        color: 'var(--text-bright, #fff)', // Bright white
                         marginBottom: '2.5rem',
                         padding: '0 1rem',
-                        lineHeight: 1.6,
-                        textShadow: '0 2px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0, 212, 255, 0.3)', // Enhanced shadow and glow
+                        lineHeight: 1.8,
+                        textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 12px rgba(0, 212, 255, 0.7)', // Strong drop shadow and glow
                         fontWeight: 700, // Bold
                     }}
                 >
                     SYSTEM STATUS:{' '}
-                    <span style={{ color: '#00ff88' }}>OPTIMAL</span>
+                    <span style={{ color: '#00ff88', textShadow: '0 0 8px rgba(0,255,136,0.6)' }}>OPTIMAL</span>
                     {isMobile ? <br /> : ' | '}
                     DATA STREAM:{' '}
-                    <span style={{ color: 'var(--accent-gold)' }}>ACTIVE</span>
+                    <span style={{ color: 'var(--accent-gold)', textShadow: '0 0 8px rgba(255,190,11,0.6)' }}>ACTIVE</span>
                     {isMobile ? <br /> : ' | '}
                     BUILD: 2045.10.27_A
                 </motion.div>
@@ -346,7 +368,8 @@ export default function HeroSection() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         gap: '1.5rem',
-                        marginTop: '2rem'
+                        marginTop: isMobile ? '3.5rem' : '2rem',
+                        transform: isMobile ? 'scale(0.85)' : 'scale(1)',
                     }}
                 >
                     {/* Launch Simulation Button */}
