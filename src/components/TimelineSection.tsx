@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const timelineEvents = [
     {
@@ -63,13 +64,27 @@ function getStatusColor(status: string) {
 }
 
 export default function TimelineSection() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    const activeIndex = timelineEvents.findIndex(e => e.status === 'upcoming');
+    const totalEvents = timelineEvents.length;
+    // Calculate progress as percentage. If all are done (activeIndex = -1), 100%. 
+    const progressPercent = activeIndex === -1 ? 100 : (activeIndex / (totalEvents - 1)) * 100;
+
     return (
         <section
             id="timeline"
             style={{
                 position: 'relative',
                 zIndex: 5,
-                padding: '6rem 2rem',
+                padding: isMobile ? '4rem 1rem' : '6rem 2rem',
                 maxWidth: '900px',
                 margin: '0 auto',
             }}
@@ -98,15 +113,32 @@ export default function TimelineSection() {
 
             {/* Timeline */}
             <div style={{ position: 'relative' }}>
-                {/* Vertical line */}
+                {/* Vertical line baseline */}
                 <div
                     style={{
                         position: 'absolute',
-                        left: '120px',
+                        left: isMobile ? '20px' : '120px',
                         top: 0,
                         bottom: 0,
                         width: '2px',
-                        background: 'linear-gradient(180deg, transparent, rgba(58,134,255,0.25), rgba(58,134,255,0.25), transparent)',
+                        background: 'rgba(58,134,255,0.1)',
+                    }}
+                />
+
+                {/* Active Progress Line */}
+                <motion.div
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${progressPercent}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                    style={{
+                        position: 'absolute',
+                        left: isMobile ? '20px' : '120px',
+                        top: 0,
+                        width: '2px',
+                        background: 'linear-gradient(180deg, var(--accent-cyan), #00ff88)',
+                        boxShadow: '0 0 10px rgba(0,212,255,0.5)',
+                        zIndex: 0,
                     }}
                 />
 
@@ -121,27 +153,32 @@ export default function TimelineSection() {
                             transition={{ delay: i * 0.08, duration: 0.5 }}
                             style={{
                                 display: 'flex',
-                                gap: '2rem',
+                                gap: isMobile ? '1rem' : '2rem',
                                 marginBottom: '2rem',
                                 alignItems: 'flex-start',
+                                flexDirection: isMobile ? 'column' : 'row',
+                                position: 'relative',
+                                paddingLeft: isMobile ? '40px' : '0',
                             }}
                         >
-                            {/* Date column */}
-                            <div
-                                style={{
-                                    width: '100px',
-                                    textAlign: 'right',
-                                    fontFamily: 'var(--font-mono)',
-                                    fontSize: '0.7rem',
-                                    flexShrink: 0,
-                                    paddingTop: '0.3rem',
-                                }}
-                            >
-                                <div style={{ color, fontWeight: 700 }}>{event.date}</div>
-                                <div style={{ color: 'var(--text-muted)', opacity: 0.6, fontSize: '0.6rem' }}>
-                                    {event.time}
+                            {/* Date column for Desktop */}
+                            {!isMobile && (
+                                <div
+                                    style={{
+                                        width: '100px',
+                                        textAlign: 'right',
+                                        fontFamily: 'var(--font-mono)',
+                                        fontSize: '0.7rem',
+                                        flexShrink: 0,
+                                        paddingTop: '0.3rem',
+                                    }}
+                                >
+                                    <div style={{ color, fontWeight: 700 }}>{event.date}</div>
+                                    <div style={{ color: 'var(--text-muted)', opacity: 0.6, fontSize: '0.6rem' }}>
+                                        {event.time}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             {/* Dot */}
                             <div
@@ -152,9 +189,10 @@ export default function TimelineSection() {
                                     background: event.status === 'active' ? color : 'transparent',
                                     border: `2px solid ${color}`,
                                     flexShrink: 0,
-                                    marginTop: '0.3rem',
+                                    position: 'absolute',
+                                    left: isMobile ? '15px' : '115px',
+                                    top: isMobile ? '6px' : '6px',
                                     boxShadow: event.status === 'active' ? `0 0 12px ${color}` : 'none',
-                                    position: 'relative',
                                     zIndex: 1,
                                 }}
                             />
@@ -165,8 +203,26 @@ export default function TimelineSection() {
                                 style={{
                                     flex: 1,
                                     borderLeft: `2px solid ${color}40`,
+                                    width: '100%',
                                 }}
                             >
+                                {/* Date and Time for Mobile inserted into the card */}
+                                {isMobile && (
+                                    <div
+                                        style={{
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: '0.65rem',
+                                            marginBottom: '0.5rem',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center'
+                                        }}
+                                    >
+                                        <div style={{ color, fontWeight: 700 }}>{event.date}</div>
+                                        <div style={{ color: 'var(--text-muted)', opacity: 0.8 }}>{event.time}</div>
+                                    </div>
+                                )}
+
                                 <h3
                                     style={{
                                         fontFamily: 'var(--font-header)',
