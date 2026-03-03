@@ -74,16 +74,17 @@ export default function PrizesSection() {
                                 backdropFilter: 'blur(10px)',
                                 border: `1px solid ${item.color}`,
                                 borderRadius: '20px',
-                                padding: '3rem 4rem',
+                                padding: 'clamp(1.5rem, 5vw, 3rem) clamp(1rem, 5vw, 4rem)',
                                 textAlign: 'center',
                                 position: 'relative',
                                 boxShadow: `0 0 30px ${item.glow}, inset 0 0 20px rgba(0,0,0,0.5)`,
                                 maxWidth: '600px',
                                 width: '100%',
+                                margin: '0 1rem'
                             }}
                         >
                             <div style={{
-                                fontSize: '2.5rem',
+                                fontSize: 'clamp(1.8rem, 6vw, 2.5rem)',
                                 fontWeight: 'bold',
                                 color: item.color,
                                 textShadow: `0 0 20px ${item.glow}`,
@@ -93,7 +94,7 @@ export default function PrizesSection() {
                                 {item.rank}
                             </div>
                             <div style={{
-                                fontSize: '4rem',
+                                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
                                 color: '#fff',
                                 marginBottom: '1.5rem',
                                 fontWeight: 'bold',
@@ -105,8 +106,8 @@ export default function PrizesSection() {
                                 listStyle: 'none',
                                 padding: 0,
                                 color: '#fff', // Made perks text much brighter
-                                fontSize: '1.2rem',
-                                lineHeight: '2'
+                                fontSize: 'clamp(0.9rem, 3vw, 1.2rem)',
+                                lineHeight: '1.8'
                             }}>
                                 {item.perks.map((perk, i) => (
                                     <li key={i} style={{ borderBottom: i < item.perks.length - 1 ? '1px solid rgba(255,255,255,0.2)' : 'none', padding: '0.8rem 0' }}>
