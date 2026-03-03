@@ -7,24 +7,20 @@ import SciFiDrone from './SciFiDrone';
 
 const features = [
     {
-        icon: '⚡',
-        title: 'Innovation Sprint',
-        description: 'A 24-hour marathon where teams prototype cutting-edge solutions across AI, IoT, Blockchain, and Cybersecurity domains.',
+        title: 'Round 1: Online Submission',
+        description: 'Submission accepted till 15th March. Must strictly follow the template. The PPT/Submit button visible after registration fee is paid. Top 40 teams will be shortlisted.',
     },
     {
-        icon: '🔬',
-        title: 'Expert Mentorship',
-        description: 'Get guided by industry professionals from top tech companies. One-on-one sessions to refine your approach and strategy.',
+        title: 'Round 2: Offline Presentation',
+        description: 'Live project explanation and demonstration of prototype/model at SIES GST. Concludes with a Question & Answer session with the expert judging panel.',
     },
     {
-        icon: '🏗️',
-        title: 'Build & Pitch',
-        description: 'Transform ideas into working prototypes. Present your innovation to a panel of judges and compete for top honors.',
+        title: 'Tracks: Software & Hardware',
+        description: 'Software teams present a working demo. Hardware teams present an actual working model. Winners will be selected on an overall basis across both tracks.',
     },
     {
-        icon: '🌐',
-        title: 'Networking Hub',
-        description: 'Connect with 500+ innovators, engineers, and tech leaders. Build relationships that last beyond the event.',
+        title: 'Rules & Guidelines',
+        description: 'Team size of 3-4 members. The project submitted in Round 1 must be the same project presented in Round 2. Any change leads to disqualification.',
     },
 ];
 
@@ -153,10 +149,7 @@ export default function AboutSection() {
                         letterSpacing: '0.02em',
                     }}
                 >
-                    Project: Schematic is CSI&apos;s flagship innovation competition — a blueprint
-                    for the future of technology. Teams design, build, and present groundbreaking
-                    projects that push the boundaries of what&apos;s possible. This is where ideas
-                    become reality.
+                    Innovations 2026 is a National Level Project Presentation Competition. Open to undergraduate students from Engineering and Diploma programmes across India. Inter-college and inter-specialisation team members are allowed. This is a one-day offline competition where top teams present their working prototypes face-to-face. No accommodation will be provided.
                 </motion.p>
 
                 {/* Feature cards */}
@@ -196,8 +189,7 @@ export default function AboutSection() {
                                 el.style.borderColor = 'rgba(0, 212, 255, 0.15)';
                             }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                                <div style={{ fontSize: '1.5rem' }}>{f.icon}</div>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '0.5rem' }}>
                                 <div style={{ fontSize: '0.6rem', opacity: 0.5 }}>0{i + 1}</div>
                             </div>
 

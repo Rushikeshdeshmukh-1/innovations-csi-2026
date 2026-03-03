@@ -108,6 +108,37 @@ export default function Navbar() {
                     </div>
                 </div>
 
+                {/* Register Button - Right aligned Desktop */}
+                <div className="hidden md:flex md:items-center">
+                    <a
+                        href="#register"
+                        style={{
+                            fontFamily: 'var(--font-mono, monospace)',
+                            fontSize: '0.8rem',
+                            color: '#00d4ff',
+                            textDecoration: 'none',
+                            letterSpacing: '0.1em',
+                            padding: '0.5rem 1.2rem',
+                            borderRadius: '4px',
+                            border: '1px solid currentColor',
+                            backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                            fontWeight: 700,
+                            transition: 'all 0.3s ease',
+                            cursor: 'default',
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(0, 212, 255, 0.3)';
+                            e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 212, 255, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(0, 212, 255, 0.1)';
+                            e.currentTarget.style.boxShadow = 'none';
+                        }}
+                    >
+                        REGISTER NOW
+                    </a>
+                </div>
+
             </div>
         </motion.nav>
     );

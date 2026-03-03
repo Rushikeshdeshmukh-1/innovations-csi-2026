@@ -354,7 +354,7 @@ export default function HeroSection() {
                     DATA STREAM:{' '}
                     <span style={{ color: 'var(--accent-gold)', textShadow: '0 0 8px rgba(255,190,11,0.6)' }}>ACTIVE</span>
                     {isMobile ? <br /> : ' | '}
-                    BUILD: 2045.10.27_A
+                    INNOVATIONS 2026
                 </motion.div>
 
                 {/* Buttons Container */}
@@ -383,7 +383,6 @@ export default function HeroSection() {
                     {/* LEFT HUD panels */}
                     <HudPanel delay={0.5} style={{ position: 'absolute', left: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
                         <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ REGISTRATIONS</div>
-                        <div>COUNT: <span style={{ color: 'var(--text-primary)', fontWeight: 'bold', textShadow: '0 1px 2px black' }}>847</span></div>
                         <div>STATUS: <span style={{ color: '#00ff88', textShadow: '0 1px 2px black' }}>OPEN</span></div>
                         <div style={{ marginTop: '0.4rem', display: 'flex', gap: '2px' }}>
                             {Array.from({ length: 8 }).map((_, i) => (
@@ -394,7 +393,7 @@ export default function HeroSection() {
 
                     <HudPanel delay={0.8} style={{ position: 'absolute', left: '1.5rem', top: '42%', width: '150px', zIndex: 3 }}>
                         <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ DEADLINE</div>
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-bright)', textShadow: '0 1px 2px black' }}>OCT 25</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-bright)', textShadow: '0 1px 2px black' }}>MAR 15</div>
                         <div style={{ fontSize: '0.5rem', color: 'var(--text-muted)', textShadow: '0 1px 2px black' }}>23:59 IST</div>
                         <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '5px' }}>
                             <polyline points="0,18 10,13 20,20 30,6 40,16 50,10 60,22 70,8 80,18 90,3 100,13 110,8 120,16" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.3" />
@@ -403,24 +402,23 @@ export default function HeroSection() {
 
                     <HudPanel delay={1.1} style={{ position: 'absolute', left: '1.5rem', bottom: '22%', width: '150px', zIndex: 3 }}>
                         <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ CATEGORIES</div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1px 8px', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>
-                            <span>SOFTWARE</span><span style={{ color: 'var(--text-primary)' }}>12</span>
-                            <span>HARDWARE</span><span style={{ color: 'var(--text-primary)' }}>8</span>
-                            <span>OPEN</span><span style={{ color: 'var(--text-primary)' }}>6</span>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>
+                            <span>SOFTWARE</span>
+                            <span>HARDWARE</span>
                         </div>
                     </HudPanel>
 
                     {/* RIGHT HUD panels */}
                     <HudPanel delay={0.6} style={{ position: 'absolute', right: '1.5rem', top: '18%', width: '150px', zIndex: 3 }}>
                         <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◎ TEAM INFO</div>
-                        <div>SIZE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>2-4 Members</span></div>
-                        <div>MODE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>Hybrid</span></div>
-                        <div>ELIGIBILITY: <span style={{ color: '#00ff88', textShadow: '0 1px 2px black' }}>All Years</span></div>
+                        <div>SIZE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>3-4 Members</span></div>
+                        <div>MODE: <span style={{ color: 'var(--text-primary)', textShadow: '0 1px 2px black' }}>Offline</span></div>
+                        <div>ELIGIBILITY: <span style={{ color: '#00ff88', textShadow: '0 1px 2px black' }}>Undergrads</span></div>
                     </HudPanel>
 
                     <HudPanel delay={0.9} style={{ position: 'absolute', right: '1.5rem', top: '45%', width: '150px', zIndex: 3 }}>
                         <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ PRIZE POOL</div>
-                        <div style={{ fontSize: '0.9rem', color: '#00ff88', fontWeight: 'bold', textShadow: '0 1px 2px black' }}>₹50,000+</div>
+                        <div style={{ fontSize: '0.9rem', color: '#00ff88', fontWeight: 'bold', textShadow: '0 1px 2px black' }}>₹25,000</div>
                         <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '5px' }}>
                             <polyline points="0,13 12,18 24,8 36,15 48,5 60,20 72,10 84,14 96,4 108,12 120,9" fill="none" stroke="var(--accent-gold)" strokeWidth="1" />
                         </svg>

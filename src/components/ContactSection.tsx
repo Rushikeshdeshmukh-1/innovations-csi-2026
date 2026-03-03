@@ -4,24 +4,22 @@ import { motion } from 'framer-motion';
 
 const contacts = [
     {
-        name: 'Aarav Patel',
-        role: 'Event Coordinator',
-        email: 'aarav@csi-innovations.org',
-        phone: '+91 98765 43210',
+        name: 'Neha Ghemud',
+        role: 'Contact Organiser',
+        email: 'ghemudneha@gmail.com',
+        phone: '+91 9321740078',
     },
     {
-        name: 'Priya Sharma',
-        role: 'Technical Lead',
-        email: 'priya@csi-innovations.org',
-        phone: '+91 87654 32109',
+        name: 'Dev Sharma',
+        role: 'Contact Organiser',
+        email: 'devs.rajsharma@gmail.com',
+        phone: '+91 9322734121',
     },
 ];
 
 const socials = [
-    { label: 'INSTAGRAM', url: '#', icon: '◎' },
-    { label: 'LINKEDIN', url: '#', icon: '◈' },
-    { label: 'TWITTER', url: '#', icon: '◉' },
-    { label: 'DISCORD', url: '#', icon: '◇' },
+    { label: 'INSTAGRAM', url: 'https://www.instagram.com/csisiesgst?igsh=MTRub3dza3kwajQ1ag==', icon: '◎' },
+    { label: 'LINKEDIN', url: 'https://www.linkedin.com/company/csi-siesgst/', icon: '◈' },
 ];
 
 export default function ContactSection() {
@@ -101,19 +99,19 @@ export default function ContactSection() {
                             {c.role.toUpperCase()}
                         </div>
 
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', lineHeight: 2 }}>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: '#fff', lineHeight: 2, textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
                             <div>
                                 ✉{' '}
                                 <a
                                     href={`mailto:${c.email}`}
-                                    style={{ color: 'var(--accent-cyan)', textDecoration: 'none' }}
+                                    style={{ color: 'var(--accent-cyan)', textDecoration: 'none', fontWeight: 'bold' }}
                                     onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.textDecoration = 'underline'; }}
                                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.textDecoration = 'none'; }}
                                 >
                                     {c.email}
                                 </a>
                             </div>
-                            <div>☎ {c.phone}</div>
+                            <div style={{ fontWeight: 'bold' }}>☎ {c.phone}</div>
                         </div>
                     </motion.div>
                 ))}
@@ -150,26 +148,28 @@ export default function ContactSection() {
                                     gap: '0.5rem',
                                     padding: '0.5rem 1rem',
                                     fontFamily: 'var(--font-mono)',
-                                    fontSize: '0.65rem',
+                                    fontSize: '0.8rem',
                                     letterSpacing: '0.1em',
-                                    color: 'var(--text-muted)',
+                                    color: '#fff', // Made bright white
                                     textDecoration: 'none',
-                                    border: '1px solid rgba(58,134,255,0.15)',
+                                    border: '1px solid rgba(58,134,255,0.4)', // Higher opacity border
                                     borderRadius: '6px',
-                                    background: 'rgba(58,134,255,0.05)',
+                                    background: 'rgba(58,134,255,0.2)', // Higher opacity background
                                     transition: 'all 0.3s ease',
+                                    fontWeight: 'bold',
+                                    textShadow: '0 1px 3px rgba(0,0,0,0.8)'
                                 }}
                                 onMouseEnter={(e) => {
                                     const el = e.currentTarget;
-                                    el.style.borderColor = 'rgba(58,134,255,0.4)';
+                                    el.style.borderColor = 'rgba(58,134,255,0.8)';
                                     el.style.color = 'var(--accent-cyan)';
-                                    el.style.background = 'rgba(58,134,255,0.1)';
+                                    el.style.background = 'rgba(58,134,255,0.4)';
                                 }}
                                 onMouseLeave={(e) => {
                                     const el = e.currentTarget;
-                                    el.style.borderColor = 'rgba(58,134,255,0.15)';
-                                    el.style.color = 'var(--text-muted)';
-                                    el.style.background = 'rgba(58,134,255,0.05)';
+                                    el.style.borderColor = 'rgba(58,134,255,0.4)';
+                                    el.style.color = '#fff';
+                                    el.style.background = 'rgba(58,134,255,0.2)';
                                 }}
                             >
                                 {s.icon} {s.label}
@@ -200,15 +200,16 @@ export default function ContactSection() {
                         ◈ VENUE COORDINATES
                     </div>
                     <div style={{ fontFamily: 'var(--font-header)', fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        Engineering Auditorium, Main Campus
+                        SIES Graduate School of Technology
                     </div>
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                    <div>LAT: 19.0760°N</div>
-                    <div>LONG: 72.8777°E</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                    <a href="https://maps.app.goo.gl/Ma7V179GKkGzbofJA" target="_blank" rel="noopener noreferrer" style={{ color: '#fff', textDecoration: 'underline', fontWeight: 'bold' }}>
+                        <div>19°02'30.3"N 73°01'27.5"E</div>
+                    </a>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--accent-gold)' }}>
-                    MARCH 15-16, 2025
+                    MARCH 27, 2026
                 </div>
             </motion.div>
         </section>

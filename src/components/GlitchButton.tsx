@@ -42,7 +42,7 @@ export default function GlitchButton({ label, href, onClick, variant }: GlitchBu
                     font-size: 1rem;
                     font-weight: 700;
                     letter-spacing: 0.15em;
-                    cursor: pointer;
+                    cursor: default;
                     overflow: hidden;
                     text-transform: uppercase;
                     outline: none;
