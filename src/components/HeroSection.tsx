@@ -290,10 +290,21 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 2.5, duration: 0.8 }}
-                    style={{ marginBottom: isMobile ? '1rem' : '1.5rem' }}
+                    style={{
+                        marginBottom: isMobile ? '1rem' : '1.5rem',
+                        position: 'relative',
+                        display: 'inline-block'
+                    }}
                 >
-                    {/* Using standard img tag for simplicity in this file setup, next/image would require configuration for external domains if any */}
-                    <img src="/csi-logo.png" alt="CSI Logo" style={{ width: isMobile ? '130px' : '180px', height: 'auto', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' }} />
+                    <img
+                        src="/csi-logo.png"
+                        alt="CSI Logo"
+                        style={{
+                            width: isMobile ? '130px' : '180px',
+                            height: 'auto',
+                            filter: 'drop-shadow(0 2px 3px rgba(0,0,0,0.9)) drop-shadow(0 0 2px rgba(0,0,0,0.8)) contrast(1.15) brightness(1.1)',
+                        }}
+                    />
                 </motion.div>
 
                 <motion.div
