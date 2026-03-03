@@ -18,7 +18,6 @@ export default function Navbar() {
         { name: 'HOME', href: '#hero' },
         { name: 'ABOUT', href: '#about' },
         { name: 'TIMELINE', href: '#timeline' },
-        { name: 'PROJECTS', href: '#gallery' },
         { name: 'CONTACT', href: '#contact' },
     ];
 
