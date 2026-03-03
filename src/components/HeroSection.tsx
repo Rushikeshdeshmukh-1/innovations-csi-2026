@@ -376,13 +376,16 @@ export default function HeroSection() {
                     style={{
                         pointerEvents: 'auto',
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: isMobile ? 'column' : 'row',
                         alignItems: 'center',
                         gap: '1.5rem',
                         marginTop: isMobile ? '3.5rem' : '2rem',
                         transform: isMobile ? 'scale(0.85)' : 'scale(1)',
                     }}
                 >
+                    {/* Register Button */}
+                    <GlitchButton label="REGISTER NOW" href="https://unstop.com/o/91DAPGL?lb=pbfjvw6v&utm_medium=Share&utm_source=competitions&utm_campaign=Rushides6031" />
+
                     {/* Launch Simulation Button */}
                     <GlitchButton label="LAUNCH SIMULATION" href="#about" />
                 </motion.div>
