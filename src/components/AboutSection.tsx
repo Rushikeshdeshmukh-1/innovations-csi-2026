@@ -141,15 +141,20 @@ export default function AboutSection() {
                     transition={{ delay: 0.2, duration: 0.8 }}
                     style={{
                         fontFamily: 'var(--font-mono)',
-                        fontSize: '0.8rem',
-                        color: 'var(--text-muted)',
+                        fontSize: 'clamp(0.9rem, 2vw, 1rem)', // Slightly smaller
+                        color: 'var(--text-bright)', // Not pure white
                         lineHeight: 1.8,
-                        maxWidth: '700px',
                         marginBottom: '3rem',
-                        letterSpacing: '0.02em',
+                        maxWidth: '800px',
+                        textShadow: '0 1px 3px rgba(0,0,0,0.9)', // Good shadow for visibility
+                        fontWeight: 500 // Not fully bold
                     }}
                 >
-                    Innovations 2026 is a National Level Project Presentation Competition. Open to undergraduate students from Engineering and Diploma programmes across India. Inter-college and inter-specialisation team members are allowed. This is a one-day offline competition where top teams present their working prototypes face-to-face. No accommodation will be provided.
+                    Innovations 2026 is a premier National Level Project Presentation Competition
+                    organized by CSI SIES GST. It serves as a dynamic platform for visionary engineering
+                    students across India to exhibit groundbreaking ideas, develop functional prototypes,
+                    and engage with industry experts. Prepare to transform your conceptual designs
+                    into tangible solutions that address real-world challenges.
                 </motion.p>
 
                 {/* Feature cards */}
@@ -189,31 +194,32 @@ export default function AboutSection() {
                                 el.style.borderColor = 'rgba(0, 212, 255, 0.15)';
                             }}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '0.5rem' }}>
-                                <div style={{ fontSize: '0.6rem', opacity: 0.5 }}>0{i + 1}</div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                                <h3
+                                    style={{
+                                        fontFamily: 'var(--font-header)',
+                                        fontSize: '1.15rem', // Slightly smaller
+                                        fontWeight: 700, // Slightly less bold
+                                        color: 'var(--accent-cyan)',
+                                        textShadow: '0 0 8px rgba(0, 212, 255, 0.4)',
+                                        margin: 0,
+                                        paddingRight: '0.5rem'
+                                    }}
+                                >
+                                    {f.title}
+                                </h3>
+                                <div style={{ fontSize: '0.6rem', opacity: 0.5, marginTop: '0.3rem', whiteSpace: 'nowrap' }}>0{i + 1}</div>
                             </div>
 
-                            <div className="hud-line" />
-
-                            <h3
-                                style={{
-                                    fontFamily: 'var(--font-header)',
-                                    fontSize: '1.1rem',
-                                    fontWeight: 600,
-                                    color: 'var(--accent-cyan)',
-                                    marginBottom: '0.5rem',
-                                    marginTop: '0.8rem',
-                                    textShadow: '0 0 5px rgba(0,212,255,0.5)',
-                                }}
-                            >
-                                {f.title}
-                            </h3>
+                            <div className="hud-line" style={{ marginBottom: '0.8rem' }} />
                             <p
                                 style={{
                                     fontFamily: 'var(--font-mono)',
-                                    fontSize: '0.72rem',
-                                    color: 'var(--text-muted)',
+                                    fontSize: '0.8rem', // Not bulky
+                                    color: 'var(--text-primary)', // Less bright
                                     lineHeight: 1.6,
+                                    fontWeight: 500, // Semi-bold
+                                    textShadow: '0 1px 2px rgba(0,0,0,0.9)'
                                 }}
                             >
                                 {f.description}

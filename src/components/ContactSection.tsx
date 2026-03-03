@@ -5,13 +5,13 @@ import { motion } from 'framer-motion';
 const contacts = [
     {
         name: 'Neha Ghemud',
-        role: 'Contact Organiser',
+        role: 'Event Lead',
         email: 'ghemudneha@gmail.com',
         phone: '+91 9321740078',
     },
     {
         name: 'Dev Sharma',
-        role: 'Contact Organiser',
+        role: 'Event Lead',
         email: 'devs.rajsharma@gmail.com',
         phone: '+91 9322734121',
     },
@@ -78,10 +78,11 @@ export default function ContactSection() {
                         <div
                             style={{
                                 fontFamily: 'var(--font-header)',
-                                fontSize: '1.1rem',
-                                fontWeight: 600,
-                                color: 'var(--text-primary)',
+                                fontSize: '1.4rem',
+                                fontWeight: 800,
+                                color: '#ffffff',
                                 marginBottom: '0.2rem',
+                                textShadow: '0 1px 3px rgba(0,0,0,0.8)'
                             }}
                         >
                             {c.name}
@@ -89,11 +90,12 @@ export default function ContactSection() {
                         <div
                             style={{
                                 fontFamily: 'var(--font-mono)',
-                                fontSize: '0.65rem',
+                                fontSize: '0.8rem',
                                 color: 'var(--accent-cyan)',
                                 letterSpacing: '0.15em',
                                 marginBottom: '1rem',
-                                opacity: 0.7,
+                                fontWeight: 'bold',
+                                textShadow: '0 1px 3px rgba(0,0,0,0.8)'
                             }}
                         >
                             {c.role.toUpperCase()}
@@ -125,17 +127,14 @@ export default function ContactSection() {
                     className="holo-panel"
                     style={{ padding: '1.8rem' }}
                 >
-                    <div
-                        style={{
-                            fontFamily: 'var(--font-header)',
-                            fontSize: '1.1rem',
-                            fontWeight: 600,
-                            color: 'var(--text-primary)',
-                            marginBottom: '1rem',
-                        }}
-                    >
-                        Connect With Us
-                    </div>
+                    <h3 style={{
+                        fontFamily: 'var(--font-header)',
+                        fontSize: '1.4rem', // Restored more normal size
+                        fontWeight: 700, // Bold but not extremely thick
+                        color: 'var(--text-bright)',
+                        marginBottom: '1.5rem',
+                        textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                    }}>CONNECT WITH US</h3>
 
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
                         {socials.map((s) => (
@@ -199,8 +198,10 @@ export default function ContactSection() {
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent-cyan)', letterSpacing: '0.15em', marginBottom: '0.3rem', opacity: 0.7 }}>
                         ◈ VENUE COORDINATES
                     </div>
-                    <div style={{ fontFamily: 'var(--font-header)', fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        SIES Graduate School of Technology
+                    <div style={{ fontFamily: 'var(--font-header)', fontSize: '1.05rem', fontWeight: 700, textShadow: '0 1px 3px rgba(0,0,0,0.8)', color: 'var(--text-bright)' }}>
+                        <div style={{ color: 'var(--accent-cyan)', marginBottom: '0.2rem' }}>
+                            SIES Graduate School of Technology
+                        </div>
                     </div>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -208,7 +209,7 @@ export default function ContactSection() {
                         <div>19°02'30.3"N 73°01'27.5"E</div>
                     </a>
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--accent-gold)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: 'bold', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
                     MARCH 27, 2026
                 </div>
             </motion.div>
