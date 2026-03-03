@@ -4,25 +4,11 @@ import { motion } from 'framer-motion';
 
 const prizes = [
     {
-        rank: '1ST',
-        prize: '₹30,000',
-        perks: ['Internship Opportunity', 'Swag Kit', 'Certificate of Excellence'],
-        color: '#FFD700', // Gold
-        glow: 'rgba(255, 215, 0, 0.4)',
-    },
-    {
-        rank: '2ND',
-        prize: '₹15,000',
-        perks: ['Swag Kit', 'Certificate of Excellence'],
-        color: '#C0C0C0', // Silver
-        glow: 'rgba(192, 192, 192, 0.4)',
-    },
-    {
-        rank: '3RD',
-        prize: '₹5,000',
-        perks: ['Swag Kit', 'Certificate of Excellence'],
-        color: '#CD7F32', // Bronze
-        glow: 'rgba(205, 127, 50, 0.4)',
+        rank: 'PRIZE POOL',
+        prize: '₹25,000',
+        perks: ['Cash Prize Pool', 'Participation Certificate for all'],
+        color: '#00d4ff', // Cyan
+        glow: 'rgba(0, 212, 255, 0.4)',
     },
 ];
 
@@ -58,7 +44,7 @@ export default function PrizesSection() {
                         textShadow: '0 0 20px rgba(0, 212, 255, 0.3)',
                         marginBottom: '1rem',
                     }}>
-                        PRIZE POOL
+                        REWARDS & PRIZES
                     </h2>
                     <div style={{
                         width: '100px',
@@ -71,34 +57,33 @@ export default function PrizesSection() {
                 </motion.div>
 
                 <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '2rem',
-                    alignItems: 'end'
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '2rem'
                 }}>
-                    {/* Re-ordering for visual hierarchy: 2nd, 1st, 3rd logic or just map */}
-                    {/* Let's swap to display 2nd, 1st, 3rd on large screens if possible, but grid is simpler */}
-                    {[prizes[1], prizes[0], prizes[2]].map((item, index) => (
+                    {prizes.map((item, index) => (
                         <motion.div
                             key={item.rank}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                            transition={{ duration: 0.6 }}
                             style={{
                                 background: 'rgba(10, 20, 40, 0.6)',
                                 backdropFilter: 'blur(10px)',
                                 border: `1px solid ${item.color}`,
                                 borderRadius: '20px',
-                                padding: '2rem',
+                                padding: '3rem 4rem',
                                 textAlign: 'center',
                                 position: 'relative',
-                                transform: item.rank === '1ST' ? 'scale(1.05) translateY(-20px)' : 'none',
                                 boxShadow: `0 0 30px ${item.glow}, inset 0 0 20px rgba(0,0,0,0.5)`,
+                                maxWidth: '600px',
+                                width: '100%',
                             }}
                         >
                             <div style={{
-                                fontSize: '4rem',
+                                fontSize: '2.5rem',
                                 fontWeight: 'bold',
                                 color: item.color,
                                 textShadow: `0 0 20px ${item.glow}`,
@@ -108,7 +93,7 @@ export default function PrizesSection() {
                                 {item.rank}
                             </div>
                             <div style={{
-                                fontSize: '2.5rem',
+                                fontSize: '4rem',
                                 color: '#fff',
                                 marginBottom: '1.5rem',
                                 fontWeight: 'bold',
@@ -119,12 +104,12 @@ export default function PrizesSection() {
                             <ul style={{
                                 listStyle: 'none',
                                 padding: 0,
-                                color: 'var(--text-muted, #aaa)',
-                                fontSize: '0.9rem',
-                                lineHeight: '1.8'
+                                color: '#fff', // Made perks text much brighter
+                                fontSize: '1.2rem',
+                                lineHeight: '2'
                             }}>
                                 {item.perks.map((perk, i) => (
-                                    <li key={i} style={{ borderBottom: i < item.perks.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none', padding: '0.5rem 0' }}>
+                                    <li key={i} style={{ borderBottom: i < item.perks.length - 1 ? '1px solid rgba(255,255,255,0.2)' : 'none', padding: '0.8rem 0' }}>
                                         {perk}
                                     </li>
                                 ))}

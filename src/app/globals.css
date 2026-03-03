@@ -41,7 +41,7 @@
   input,
   select,
   textarea {
-    cursor: none;
+    cursor: none !important;
   }
 
   ::-webkit-scrollbar {

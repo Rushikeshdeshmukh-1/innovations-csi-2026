@@ -7,7 +7,7 @@ import CustomCursor from '@/components/CustomCursor';
 import AboutSection from '@/components/AboutSection';
 import TimelineSection from '@/components/TimelineSection';
 import PrizesSection from '@/components/PrizesSection';
-import GallerySection from '@/components/GallerySection';
+import GallerySection from '@/components/GallerySection'; // removed
 import ContactSection from '@/components/ContactSection';
 import RegisterSection from '@/components/RegisterSection';
 import Footer from '@/components/Footer';
@@ -29,7 +29,7 @@ export default function Home() {
         <AboutSection />
         <TimelineSection />
         <PrizesSection />
-        <GallerySection />
+
         <RegisterSection />
         <ContactSection />
       </main>

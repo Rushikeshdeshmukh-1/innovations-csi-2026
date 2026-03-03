@@ -50,25 +50,7 @@ export default function RegisterSection() {
                     REGISTER <span style={{ color: 'var(--accent-cyan)' }}>NOW</span>
                 </motion.h2>
 
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.9rem',
-                        color: 'var(--text-primary)',
-                        marginBottom: '3rem',
-                        letterSpacing: '0.04em',
-                        maxWidth: '600px',
-                        lineHeight: '1.6',
-                        textShadow: '0 2px 4px rgba(0,0,0,0.5)',
-                    }}
-                >
-                    Secure your team's spot in the innovation sprint.
-                    Click below to access the official registration portal.
-                </motion.p>
+
 
 
                 <div
@@ -88,8 +70,7 @@ export default function RegisterSection() {
                     */}
                         <GlitchButton
                             label="ENTER PORTAL"
-                            href="#" // This would link to the actual Google Form or Typeform
-                            onClick={() => alert("Redirecting to Registration Portal...")}
+                            href="https://unstop.com/o/91DAPGL?lb=pbfjvw6v&utm_medium=Share&utm_source=competitions&utm_campaign=Rushides6031"
                         />
                     </motion.div>
                 </div>

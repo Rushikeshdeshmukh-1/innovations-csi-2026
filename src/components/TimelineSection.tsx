@@ -5,53 +5,25 @@ import { useState, useEffect } from 'react';
 
 const timelineEvents = [
     {
-        date: 'MAR 01',
-        time: '09:00',
-        title: 'Registration Opens',
-        description: 'Portal goes live. Teams register and submit project abstracts.',
-        status: 'completed',
-    },
-    {
-        date: 'MAR 10',
-        time: '18:00',
+        date: 'MAR 15',
+        time: '23:59',
         title: 'Registration Deadline',
-        description: 'Final call for team registration. Late submissions not accepted.',
-        status: 'completed',
+        description: 'Last date to register for the competition.',
+        timestamp: new Date('2026-03-15T23:59:00+05:30').getTime(),
     },
     {
         date: 'MAR 15',
-        time: '10:00',
-        title: 'Opening Ceremony',
-        description: 'Keynote address, rules briefing, and mentor assignments.',
-        status: 'active',
+        time: '23:59',
+        title: 'Round 1 Submission',
+        description: 'Online PPT submission deadline. Must follow the prescribed template.',
+        timestamp: new Date('2026-03-15T23:59:00+05:30').getTime(),
     },
     {
-        date: 'MAR 15',
-        time: '11:00',
-        title: 'Build Phase Begins',
-        description: '24 hours to transform your idea into a working prototype.',
-        status: 'upcoming',
-    },
-    {
-        date: 'MAR 16',
-        time: '11:00',
-        title: 'Submission Deadline',
-        description: 'All projects must be submitted. Code freeze enforced.',
-        status: 'upcoming',
-    },
-    {
-        date: 'MAR 16',
-        time: '14:00',
-        title: 'Pitch Round',
-        description: 'Shortlisted teams present to judges. 10 min pitch + 5 min Q&A.',
-        status: 'upcoming',
-    },
-    {
-        date: 'MAR 16',
-        time: '17:00',
-        title: 'Awards Ceremony',
-        description: 'Winners announced. Prizes, certificates, and closing keynote.',
-        status: 'upcoming',
+        date: 'MAR 27',
+        time: '08:00',
+        title: 'Final Offline Round',
+        description: 'Live project presentation and working prototype demonstration at SIES GST.',
+        timestamp: new Date('2026-03-27T08:00:00+05:30').getTime(),
     },
 ];
 
@@ -65,18 +37,41 @@ function getStatusColor(status: string) {
 
 export default function TimelineSection() {
     const [isMobile, setIsMobile] = useState(false);
+    const [currentTime, setCurrentTime] = useState(Date.now());
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
         checkMobile();
         window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
+
+        // Update time every minute
+        const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
+
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+            clearInterval(timer);
+        };
     }, []);
 
-    const activeIndex = timelineEvents.findIndex(e => e.status === 'upcoming');
-    const totalEvents = timelineEvents.length;
-    // Calculate progress as percentage. If all are done (activeIndex = -1), 100%. 
-    const progressPercent = activeIndex === -1 ? 100 : (activeIndex / (totalEvents - 1)) * 100;
+    const startTime = new Date('2026-03-01T00:00:00+05:30').getTime(); // Assume event campaign started March 1st
+    const endTime = timelineEvents[timelineEvents.length - 1].timestamp;
+
+    // Calculate progress smoothly between start and end date
+    const progressPercent = Math.max(0, Math.min(100, ((currentTime - startTime) / (endTime - startTime)) * 100));
+
+    // Determine status map
+    const processedEvents = timelineEvents.map((event, index) => {
+        const isCompleted = currentTime >= event.timestamp;
+        const nextEventTime = timelineEvents[index + 1]?.timestamp || Infinity;
+        const isActive = currentTime >= event.timestamp && currentTime < nextEventTime;
+
+        // If not completed and not active, but is the *first* uncompleted item (and we haven't reached its time), 
+        // let's mark it as active so it glows if it's the next immediate deadline.
+        return {
+            ...event,
+            status: isCompleted ? 'completed' : (currentTime < event.timestamp && (index === 0 || currentTime >= timelineEvents[index - 1].timestamp) ? 'active' : 'upcoming')
+        };
+    });
 
     return (
         <section
@@ -142,7 +137,7 @@ export default function TimelineSection() {
                     }}
                 />
 
-                {timelineEvents.map((event, i) => {
+                {processedEvents.map((event, i) => {
                     const color = getStatusColor(event.status);
                     return (
                         <motion.div

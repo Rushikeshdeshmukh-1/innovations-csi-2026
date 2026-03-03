@@ -30,10 +30,10 @@ export default function Footer() {
                     viewport={{ once: true }}
                 >
                     <div style={{ fontFamily: 'var(--font-header)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent-cyan)', letterSpacing: '0.08em', marginBottom: '0.4rem' }}>
-                        PROJECT: SCHEMATIC
+                        INNOVATIONS 2026
                     </div>
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
-                        CSI INNOVATIONS HUB | COMPUTER SOCIETY OF INDIA
+                        CSI SIESGST
                     </div>
                 </motion.div>
 
