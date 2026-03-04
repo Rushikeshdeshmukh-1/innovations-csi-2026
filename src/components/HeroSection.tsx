@@ -227,6 +227,61 @@ function HudPanel({ children, style, delay = 0 }: { children: React.ReactNode; s
     );
 }
 
+function CountdownTimer({ targetDate }: { targetDate: string }) {
+    const [timeLeft, setTimeLeft] = useState<{ d: number, h: number, m: number, s: number } | null>(null);
+
+    useEffect(() => {
+        const target = new Date(targetDate).getTime();
+
+        const update = () => {
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff <= 0) {
+                setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
+                return;
+            }
+
+            setTimeLeft({
+                d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+                h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+                s: Math.floor((diff % (1000 * 60)) / 1000)
+            });
+        };
+
+        update();
+        const interval = setInterval(update, 1000);
+        return () => clearInterval(interval);
+    }, [targetDate]);
+
+    if (!timeLeft) return <div style={{ fontSize: '0.8rem', color: 'var(--text-bright)' }}>LOADING...</div>;
+
+    return (
+        <div style={{ display: 'flex', gap: '3px', fontSize: '0.75rem', color: 'var(--text-bright)', textShadow: '0 1px 2px black', fontWeight: 'bold' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>{timeLeft.d.toString().padStart(2, '0')}</span>
+                <span style={{ fontSize: '0.4rem', color: 'var(--text-muted)' }}>D</span>
+            </div>
+            <span>:</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>{timeLeft.h.toString().padStart(2, '0')}</span>
+                <span style={{ fontSize: '0.4rem', color: 'var(--text-muted)' }}>H</span>
+            </div>
+            <span>:</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>{timeLeft.m.toString().padStart(2, '0')}</span>
+                <span style={{ fontSize: '0.4rem', color: 'var(--text-muted)' }}>M</span>
+            </div>
+            <span>:</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>{timeLeft.s.toString().padStart(2, '0')}</span>
+                <span style={{ fontSize: '0.4rem', color: 'var(--text-muted)' }}>S</span>
+            </div>
+        </div>
+    );
+}
+
 export default function HeroSection() {
     const [isMobile, setIsMobile] = useState(false);
 
@@ -368,6 +423,29 @@ export default function HeroSection() {
                     INNOVATIONS 2026
                 </motion.div>
 
+                {/* Mobile Countdown Timer */}
+                {isMobile && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 3.6, duration: 0.8 }}
+                        style={{
+                            marginBottom: '0.5rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '0.3rem',
+                            background: 'transparent',
+                            padding: '0.2rem',
+                        }}
+                    >
+                        <div style={{ color: 'var(--accent-gold)', fontSize: '0.6rem', textShadow: '0 2px 4px black', letterSpacing: '0.1em', fontWeight: 'bold' }}>LAUNCH COUNTDOWN</div>
+                        <div style={{ transform: 'scale(1.05)' }}>
+                            <CountdownTimer targetDate="2026-03-27T00:00:00+05:30" />
+                        </div>
+                    </motion.div>
+                )}
+
                 {/* Buttons Container */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -406,10 +484,9 @@ export default function HeroSection() {
                     </HudPanel>
 
                     <HudPanel delay={0.8} style={{ position: 'absolute', left: '1.5rem', top: '42%', width: '150px', zIndex: 3 }}>
-                        <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ DEADLINE</div>
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-bright)', textShadow: '0 1px 2px black' }}>MAR 15</div>
-                        <div style={{ fontSize: '0.5rem', color: 'var(--text-muted)', textShadow: '0 1px 2px black' }}>23:59 IST</div>
-                        <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '5px' }}>
+                        <div style={{ color: 'var(--accent-gold)', marginBottom: '0.3rem', fontSize: '0.52rem', textShadow: '0 1px 2px black' }}>◈ LAUNCH COUNTDOWN</div>
+                        <CountdownTimer targetDate="2026-03-27T00:00:00+05:30" />
+                        <svg width="120" height="25" viewBox="0 0 120 25" style={{ opacity: 0.7, marginTop: '2px' }}>
                             <polyline points="0,18 10,13 20,20 30,6 40,16 50,10 60,22 70,8 80,18 90,3 100,13 110,8 120,16" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.3" />
                         </svg>
                     </HudPanel>
