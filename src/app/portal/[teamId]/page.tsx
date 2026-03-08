@@ -391,9 +391,42 @@ export default function PortalPage() {
                             </div>
                         </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
                             <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>STATUS:</span>
                             <span style={{ fontSize: '0.7rem', color: statusColors[team.status], fontWeight: 700, letterSpacing: '0.1em' }}>{team.status.toUpperCase()}</span>
+                        </div>
+
+                        {/* Food Check-in Status */}
+                        <div style={{
+                            background: team.foodCheckedIn ? 'rgba(0,255,136,0.08)' : 'rgba(255,59,48,0.08)',
+                            border: `1px solid ${team.foodCheckedIn ? 'rgba(0,255,136,0.3)' : 'rgba(255,59,48,0.3)'}`,
+                            borderRadius: '8px',
+                            padding: '0.8rem',
+                        }}>
+                            <div style={{
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem',
+                            }}>
+                                <span style={{ fontSize: '0.85rem' }}>🍽</span>
+                                <span style={{
+                                    fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em',
+                                    color: team.foodCheckedIn ? '#00ff88' : '#ff3b30',
+                                }}>
+                                    {team.foodCheckedIn ? 'ALL CHECKED IN' : 'FOOD PENDING'}
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                {team.members.map((member) => (
+                                    <div key={member.name} style={{
+                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                        padding: '0.3rem 0.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '4px',
+                                    }}>
+                                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-primary)' }}>{member.name}</span>
+                                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 700, color: member.foodCheckedIn ? '#00ff88' : '#ff3b30' }}>
+                                            {member.foodCheckedIn ? '✓' : '✗'}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
