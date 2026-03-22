@@ -7,105 +7,99 @@ import { useLeaderboardStore, Team } from '@/store/leaderboardStore';
 import GlitchButton from '@/components/GlitchButton';
 import Link from 'next/link';
 
-function RoomMap({ roomNumber }: { roomNumber: string }) {
-    const block = roomNumber?.charAt(0) || 'A';
-    const room = roomNumber?.slice(2) || '000';
+/* ─── Venue Map ─── */
+function VenueMap({ venue, category }: { venue: string; category: string }) {
+    const isSoftware = category === 'SOFTWARE';
+    const venues = isSoftware
+        ? ['GST AUDI', 'IEM']
+        : ['LAB-5', 'LAB-6', 'LAB-7'];
 
-    // Grid positions for blocks
-    const blockPositions: Record<string, { x: number; y: number }> = {
-        A: { x: 60, y: 50 },
-        B: { x: 200, y: 50 },
-        C: { x: 130, y: 150 },
+    const venuePositions: Record<string, { x: number; y: number; w: number; h: number }> = {
+        'GST AUDI': { x: 30, y: 30, w: 120, h: 70 },
+        'IEM': { x: 180, y: 30, w: 120, h: 70 },
+        'LAB-5': { x: 20, y: 30, w: 90, h: 70 },
+        'LAB-6': { x: 125, y: 30, w: 90, h: 70 },
+        'LAB-7': { x: 230, y: 30, w: 90, h: 70 },
     };
 
-    const pos = blockPositions[block] || blockPositions['A'];
+    const accentColor = isSoftware ? '#00d4ff' : '#ff6b35';
 
     return (
         <div
             style={{
                 background: 'rgba(13,26,58,0.5)',
-                border: '1px solid rgba(58,134,255,0.2)',
+                border: `1px solid rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.2)`,
                 borderRadius: '8px',
-                padding: '1.5rem',
+                padding: '1.2rem',
             }}
         >
-            <div
-                style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.65rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.15em',
-                    marginBottom: '1rem',
-                }}
-            >
-                ◈ DIRECTIONAL COMPASS — FLOOR PLAN
+            <div style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.6rem',
+                color: 'var(--text-muted)',
+                letterSpacing: '0.15em',
+                marginBottom: '0.8rem',
+            }}>
+                ◈ VENUE MAP — {isSoftware ? 'SOFTWARE' : 'HARDWARE'}
             </div>
 
-            <svg
-                viewBox="0 0 340 220"
-                width="100%"
-                style={{ maxWidth: '500px' }}
-            >
+            <svg viewBox={`0 0 ${isSoftware ? 340 : 340} 130`} width="100%" style={{ maxWidth: '500px' }}>
                 {/* Grid background */}
                 <defs>
-                    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
-                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(58,134,255,0.1)" strokeWidth="0.5" />
+                    <pattern id="venueGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke={`rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.08)`} strokeWidth="0.5" />
                     </pattern>
                 </defs>
-                <rect width="340" height="220" fill="url(#smallGrid)" />
+                <rect width="340" height="130" fill="url(#venueGrid)" />
 
-                {/* Building outline */}
-                <rect x="20" y="20" width="130" height="80" rx="4" fill="rgba(58,134,255,0.05)" stroke="rgba(58,134,255,0.3)" strokeWidth="1" />
-                <rect x="160" y="20" width="130" height="80" rx="4" fill="rgba(58,134,255,0.05)" stroke="rgba(58,134,255,0.3)" strokeWidth="1" />
-                <rect x="90" y="120" width="130" height="80" rx="4" fill="rgba(58,134,255,0.05)" stroke="rgba(58,134,255,0.3)" strokeWidth="1" />
+                {venues.map((v) => {
+                    const pos = venuePositions[v];
+                    const isActive = v === venue;
+                    return (
+                        <g key={v}>
+                            <rect
+                                x={pos.x}
+                                y={pos.y}
+                                width={pos.w}
+                                height={pos.h}
+                                rx="4"
+                                fill={isActive ? `rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.15)` : `rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.03)`}
+                                stroke={isActive ? accentColor : `rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.2)`}
+                                strokeWidth={isActive ? 2 : 1}
+                            />
+                            <text
+                                x={pos.x + pos.w / 2}
+                                y={pos.y + pos.h / 2 + 4}
+                                textAnchor="middle"
+                                fill={isActive ? accentColor : `rgba(${isSoftware ? '0,212,255' : '255,107,53'},0.4)`}
+                                fontSize="10"
+                                fontFamily="var(--font-mono)"
+                                fontWeight={isActive ? 'bold' : 'normal'}
+                            >
+                                {v}
+                            </text>
+                            {isActive && (
+                                <motion.rect
+                                    x={pos.x}
+                                    y={pos.y}
+                                    width={pos.w}
+                                    height={pos.h}
+                                    rx="4"
+                                    fill="none"
+                                    stroke={accentColor}
+                                    strokeWidth={2}
+                                    animate={{ opacity: [1, 0.3, 1] }}
+                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                />
+                            )}
+                        </g>
+                    );
+                })}
 
-                {/* Block labels */}
-                <text x="85" y="65" textAnchor="middle" fill="rgba(58,134,255,0.5)" fontSize="12" fontFamily="var(--font-mono)">BLOCK A</text>
-                <text x="225" y="65" textAnchor="middle" fill="rgba(58,134,255,0.5)" fontSize="12" fontFamily="var(--font-mono)">BLOCK B</text>
-                <text x="155" y="165" textAnchor="middle" fill="rgba(58,134,255,0.5)" fontSize="12" fontFamily="var(--font-mono)">BLOCK C</text>
-
-                {/* Corridors */}
-                <line x1="150" y1="60" x2="160" y2="60" stroke="rgba(255,190,11,0.3)" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="130" y1="100" x2="130" y2="120" stroke="rgba(255,190,11,0.3)" strokeWidth="2" strokeDasharray="4 2" />
-                <line x1="200" y1="100" x2="200" y2="120" stroke="rgba(255,190,11,0.3)" strokeWidth="2" strokeDasharray="4 2" />
-
-                {/* Highlighted room */}
-                <motion.circle
-                    cx={pos.x}
-                    cy={pos.y}
-                    r="12"
-                    fill="rgba(255,190,11,0.2)"
-                    stroke="#FFBE0B"
-                    strokeWidth="2"
-                    animate={{ r: [12, 16, 12], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                />
-                <text
-                    x={pos.x}
-                    y={pos.y + 4}
-                    textAnchor="middle"
-                    fill="#FFBE0B"
-                    fontSize="8"
-                    fontFamily="var(--font-mono)"
-                    fontWeight="bold"
-                >
-                    {room}
+                {/* Label */}
+                <text x="170" y="120" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="8" fontFamily="var(--font-mono)">
+                    YOUR VENUE IS HIGHLIGHTED
                 </text>
-
-                {/* Room label below */}
-                <text
-                    x={pos.x}
-                    y={pos.y + 28}
-                    textAnchor="middle"
-                    fill="#FFBE0B"
-                    fontSize="9"
-                    fontFamily="var(--font-mono)"
-                >
-                    ROOM {roomNumber}
-                </text>
-
-                {/* Compass */}
-                <text x="310" y="210" fill="rgba(58,134,255,0.4)" fontSize="10" fontFamily="var(--font-mono)">N↑</text>
             </svg>
         </div>
     );
@@ -127,44 +121,35 @@ function TeamNotFound() {
                 zIndex: 5,
             }}
         >
-            <div
-                style={{
-                    fontSize: '6rem',
-                    fontWeight: 700,
-                    fontFamily: 'var(--font-header)',
-                    color: 'var(--accent-cyan)',
-                    opacity: 0.2,
-                    lineHeight: 1,
-                    marginBottom: '1rem',
-                }}
-            >
+            <div style={{
+                fontSize: '6rem',
+                fontWeight: 700,
+                fontFamily: 'var(--font-header)',
+                color: 'var(--accent-cyan)',
+                opacity: 0.2,
+                lineHeight: 1,
+                marginBottom: '1rem',
+            }}>
                 404
             </div>
-            <div
-                style={{
-                    fontSize: '1.2rem',
-                    fontWeight: 600,
-                    color: 'var(--text-primary)',
-                    marginBottom: '0.5rem',
-                    fontFamily: 'var(--font-header)',
-                }}
-            >
+            <div style={{
+                fontSize: '1.2rem',
+                fontWeight: 600,
+                color: 'var(--text-primary)',
+                marginBottom: '0.5rem',
+                fontFamily: 'var(--font-header)',
+            }}>
                 TEAM NOT FOUND
             </div>
-            <div
-                style={{
-                    fontSize: '0.7rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.15em',
-                    marginBottom: '2rem',
-                }}
-            >
+            <div style={{
+                fontSize: '0.7rem',
+                color: 'var(--text-muted)',
+                letterSpacing: '0.15em',
+                marginBottom: '2rem',
+            }}>
                 ERROR: SCHEMATIC REFERENCE NOT IN DATABASE
             </div>
-            <Link
-                href="/"
-                style={{ textDecoration: 'none' }}
-            >
+            <Link href="/" style={{ textDecoration: 'none' }}>
                 <GlitchButton label="RETURN TO HUB" href="/" />
             </Link>
         </div>
@@ -178,27 +163,22 @@ export default function PortalPage() {
     const [team, setTeam] = useState<Team | undefined>(undefined);
     const [loading, setLoading] = useState(true);
 
-    // 3D Tilt Logic - MOVED TO TOP to fix Hook Error
+    // 3D Tilt Logic
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-    const rotateX = useTransform(y, [-300, 300], [15, -15]);
-    const rotateY = useTransform(x, [-300, 300], [-15, 15]);
+    const rotateX = useTransform(y, [-300, 300], [8, -8]);
+    const rotateY = useTransform(x, [-300, 300], [-8, 8]);
 
-    // Smooth spring physics for rotation
-    const springConfig = { damping: 20, stiffness: 100 };
+    const springConfig = { damping: 25, stiffness: 120 };
     const springRotateX = useSpring(rotateX, springConfig);
     const springRotateY = useSpring(rotateY, springConfig);
 
     function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
         const rect = event.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
-        const xPct = mouseX - width / 2;
-        const yPct = mouseY - height / 2;
-        x.set(xPct);
-        y.set(yPct);
+        const mouseX = event.clientX - rect.left - rect.width / 2;
+        const mouseY = event.clientY - rect.top - rect.height / 2;
+        x.set(mouseX);
+        y.set(mouseY);
     }
 
     function handleMouseLeave() {
@@ -207,7 +187,6 @@ export default function PortalPage() {
     }
 
     useEffect(() => {
-        // Simulate fetch delay (swap with real DB call later)
         const timer = setTimeout(() => {
             setTeam(getTeamById(teamId));
             setLoading(false);
@@ -217,20 +196,18 @@ export default function PortalPage() {
 
     if (loading) {
         return (
-            <div
-                style={{
-                    minHeight: '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.8rem',
-                    color: 'var(--accent-cyan)',
-                    letterSpacing: '0.2em',
-                    position: 'relative',
-                    zIndex: 5,
-                }}
-            >
+            <div style={{
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.8rem',
+                color: 'var(--accent-cyan)',
+                letterSpacing: '0.2em',
+                position: 'relative',
+                zIndex: 5,
+            }}>
                 LOADING TEAM SCHEMATIC...
             </div>
         );
@@ -245,23 +222,24 @@ export default function PortalPage() {
         Eliminated: '#ff3b30',
     };
 
-
+    const categoryColor = team.category === 'HARDWARE' ? '#ff6b35' : '#00d4ff';
+    const categoryIcon = team.category === 'HARDWARE' ? '⚙' : '💻';
 
     return (
         <div
             style={{
                 minHeight: '100vh',
-                padding: '5rem 2rem 3rem',
+                padding: 'clamp(3rem, 8vw, 5rem) clamp(0.75rem, 3vw, 2rem) 3rem',
                 maxWidth: '900px',
                 margin: '0 auto',
                 position: 'relative',
                 zIndex: 5,
-                perspective: '1200px', // Detailed perspective for 3D
+                perspective: '1200px',
             }}
         >
             {/* Back link */}
             <Link
-                href="/"
+                href="/portal"
                 style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: '0.7rem',
@@ -277,24 +255,18 @@ export default function PortalPage() {
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--accent-cyan)'; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'; }}
             >
-                ← RETURN TO MAIN SCHEMATIC
+                ← BACK TO TEAM LOOKUP
             </Link>
 
-            {/* ID Card Wrapper for Tilt Event */}
+            {/* 3D Card Wrapper */}
             <motion.div
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onTouchMove={(e) => {
                     const touch = e.touches[0];
                     const rect = e.currentTarget.getBoundingClientRect();
-                    const width = rect.width;
-                    const height = rect.height;
-                    const mouseX = touch.clientX - rect.left;
-                    const mouseY = touch.clientY - rect.top;
-                    const xPct = mouseX - width / 2;
-                    const yPct = mouseY - height / 2;
-                    x.set(xPct);
-                    y.set(yPct);
+                    x.set(touch.clientX - rect.left - rect.width / 2);
+                    y.set(touch.clientY - rect.top - rect.height / 2);
                 }}
                 onTouchEnd={handleMouseLeave}
                 initial={{ opacity: 0, rotateY: 90 }}
@@ -302,102 +274,197 @@ export default function PortalPage() {
                 transition={{ duration: 0.8, type: 'spring' }}
                 style={{
                     width: '100%',
-                    maxWidth: '450px',
+                    maxWidth: '480px',
                     margin: '0 auto',
                     position: 'relative',
-                    aspectRatio: '3/5',
-                    transformStyle: 'preserve-3d', // Enable 3D children
+                    transformStyle: 'preserve-3d',
                     rotateX: springRotateX,
                     rotateY: springRotateY,
                 }}
             >
-                {/* The Card Itself */}
+                {/* The Card */}
                 <div
                     className="holo-hud-card"
                     style={{
                         width: '100%',
-                        height: '100%',
                         padding: '0',
                         overflow: 'hidden',
                         background: 'rgba(4, 25, 50, 0.85)',
-                        boxShadow: '0 0 50px rgba(0, 212, 255, 0.15)',
+                        boxShadow: `0 0 50px rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.15), 0 25px 50px rgba(0,0,0,0.4)`,
                         display: 'flex',
                         flexDirection: 'column',
-                        // Backface hidden? kept visible for glass effect
                         backfaceVisibility: 'hidden',
-                        transform: 'translateZ(0)', // GPU
+                        transform: 'translateZ(0)',
                     }}
                 >
-                    {/* Header Status Bar (Parallax Z=20) */}
-                    <div
-                        style={{
-                            padding: '1rem',
-                            background: 'linear-gradient(90deg, rgba(0,212,255,0.1), transparent)',
-                            borderBottom: '1px solid rgba(0,212,255,0.3)',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            transform: 'translateZ(20px)',
-                        }}
-                    >
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--accent-cyan)' }}>
+                    {/* Header Status Bar */}
+                    <div style={{
+                        padding: 'clamp(0.8rem, 2vw, 1rem)',
+                        background: `linear-gradient(90deg, rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.1), transparent)`,
+                        borderBottom: `1px solid rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.3)`,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        transform: 'translateZ(20px)',
+                    }}>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: categoryColor, letterSpacing: '0.1em' }}>
                             ID: {team.id.toUpperCase()}
                         </div>
-                        <div style={{
-                            width: '8px', height: '8px',
-                            background: team.status === 'Shortlisted' ? '#00ff88' : team.status === 'Eliminated' ? '#ff3b30' : 'var(--accent-gold)',
-                            borderRadius: '50%',
-                            boxShadow: `0 0 10px ${team.status === 'Shortlisted' ? '#00ff88' : 'var(--accent-gold)'}`
-                        }} />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                            <div style={{
+                                width: '8px', height: '8px',
+                                background: statusColors[team.status] || '#3A86FF',
+                                borderRadius: '50%',
+                                boxShadow: `0 0 10px ${statusColors[team.status] || '#3A86FF'}`,
+                            }} />
+                            <span style={{
+                                fontSize: '0.55rem',
+                                fontWeight: 700,
+                                fontFamily: 'var(--font-mono)',
+                                color: statusColors[team.status] || '#3A86FF',
+                                letterSpacing: '0.1em',
+                            }}>
+                                {team.status.toUpperCase()}
+                            </span>
+                        </div>
                     </div>
 
-                    {/* Main Content (Parallax Z=40) */}
-                    <div style={{ padding: '2rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', transform: 'translateZ(40px)' }}>
-
-                        {/* Holographic Avatar Placeholder */}
+                    {/* Main Content */}
+                    <div style={{
+                        padding: 'clamp(1.2rem, 4vw, 2rem)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        transform: 'translateZ(40px)',
+                    }}>
+                        {/* Avatar */}
                         <div style={{
-                            width: '100px', height: '100px', margin: '0 auto 1.5rem',
+                            width: 'clamp(70px, 15vw, 100px)',
+                            height: 'clamp(70px, 15vw, 100px)',
+                            margin: '0 auto 1.2rem',
                             borderRadius: '50%',
-                            border: '2px dashed var(--accent-cyan)',
+                            border: `2px dashed ${categoryColor}`,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: '2rem',
-                            color: 'var(--accent-cyan)',
-                            background: 'rgba(0,212,255,0.05)',
-                            boxShadow: '0 0 20px rgba(0,212,255,0.2)',
-                            transform: 'translateZ(20px)', // Extra pop
+                            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                            color: categoryColor,
+                            background: `rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.05)`,
+                            boxShadow: `0 0 20px rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.2)`,
+                            transform: 'translateZ(20px)',
                         }}>
                             {team.teamName.charAt(0)}
                         </div>
 
+                        {/* Team Name */}
                         <h1 style={{
-                            fontFamily: 'var(--font-header)', fontSize: '2rem', fontWeight: 700, color: '#fff',
-                            marginBottom: '0.5rem', textShadow: '0 0 10px rgba(255,255,255,0.3)'
+                            fontFamily: 'var(--font-header)',
+                            fontSize: 'clamp(1.3rem, 5vw, 2rem)',
+                            fontWeight: 700,
+                            color: '#fff',
+                            marginBottom: '0.3rem',
+                            textShadow: '0 0 10px rgba(255,255,255,0.3)',
+                            wordBreak: 'break-word',
                         }}>
-                            {team.projectName}
+                            {team.teamName}
                         </h1>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--accent-cyan)', marginBottom: '2rem', letterSpacing: '0.1em' }}>
-                            {team.teamName.toUpperCase()}
+                        <div style={{
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.7rem',
+                            color: categoryColor,
+                            marginBottom: '1.5rem',
+                            letterSpacing: '0.1em',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.4rem',
+                        }}>
+                            <span>{categoryIcon}</span>
+                            <span>{team.category}</span>
                         </div>
 
                         {/* Stats Grid */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
-                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
-                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>ROOM</div>
-                                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.roomNumber || 'TBA'}</div>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                            gap: '0.6rem',
+                            width: '100%',
+                            marginBottom: '1.5rem',
+                        }}>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.7rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
+                                <div style={{ fontSize: '0.5rem', color: 'var(--text-muted)', marginBottom: '0.2rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>VENUE</div>
+                                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-gold)', wordBreak: 'break-word' }}>{team.roomNumber || 'TBA'}</div>
                             </div>
-                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
-                                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginBottom: '0.2rem' }}>SCORE</div>
-                                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.score}</div>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.7rem', borderRadius: '8px', transform: 'translateZ(10px)' }}>
+                                <div style={{ fontSize: '0.5rem', color: 'var(--text-muted)', marginBottom: '0.2rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>MEMBERS</div>
+                                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.members.length}</div>
                             </div>
                         </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>STATUS:</span>
-                            <span style={{ fontSize: '0.7rem', color: statusColors[team.status], fontWeight: 700, letterSpacing: '0.1em' }}>{team.status.toUpperCase()}</span>
+                        {/* Status */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.2rem' }}>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>STATUS:</span>
+                            <span style={{ fontSize: '0.65rem', color: statusColors[team.status], fontWeight: 700, letterSpacing: '0.1em', fontFamily: 'var(--font-mono)' }}>{team.status.toUpperCase()}</span>
+                        </div>
+
+                        {/* Members List */}
+                        <div style={{
+                            width: '100%',
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(0,212,255,0.15)',
+                            borderRadius: '8px',
+                            padding: '0.8rem',
+                            marginBottom: '1rem',
+                        }}>
+                            <div style={{
+                                fontFamily: 'var(--font-mono)',
+                                fontSize: '0.5rem',
+                                letterSpacing: '0.15em',
+                                color: 'var(--text-muted)',
+                                marginBottom: '0.5rem',
+                                textAlign: 'left',
+                            }}>
+                                👥 TEAM MEMBERS
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                {team.members.map((member, idx) => (
+                                    <div key={member.name} style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '0.3rem 0.5rem',
+                                        background: 'rgba(255,255,255,0.03)',
+                                        borderRadius: '4px',
+                                    }}>
+                                        <span style={{
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: '0.6rem',
+                                            color: 'var(--text-primary)',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap',
+                                            flex: 1,
+                                            minWidth: 0,
+                                        }}>
+                                            {member.name}
+                                        </span>
+                                        {idx === 0 && (
+                                            <span style={{
+                                                fontSize: '0.45rem',
+                                                fontWeight: 700,
+                                                fontFamily: 'var(--font-mono)',
+                                                color: 'var(--accent-gold)',
+                                                letterSpacing: '0.1em',
+                                                flexShrink: 0,
+                                                marginLeft: '0.5rem',
+                                            }}>LEAD</span>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Food Check-in Status */}
                         <div style={{
+                            width: '100%',
                             background: team.foodCheckedIn ? 'rgba(0,255,136,0.08)' : 'rgba(255,59,48,0.08)',
                             border: `1px solid ${team.foodCheckedIn ? 'rgba(0,255,136,0.3)' : 'rgba(255,59,48,0.3)'}`,
                             borderRadius: '8px',
@@ -406,22 +473,29 @@ export default function PortalPage() {
                             <div style={{
                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem',
                             }}>
-                                <span style={{ fontSize: '0.85rem' }}>🍽</span>
+                                <span style={{ fontSize: '0.8rem' }}>🍽</span>
                                 <span style={{
-                                    fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.1em',
+                                    fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 700, letterSpacing: '0.1em',
                                     color: team.foodCheckedIn ? '#00ff88' : '#ff3b30',
                                 }}>
                                     {team.foodCheckedIn ? 'ALL CHECKED IN' : 'FOOD PENDING'}
                                 </span>
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
                                 {team.members.map((member) => (
                                     <div key={member.name} style={{
                                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                                        padding: '0.3rem 0.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '4px',
+                                        padding: '0.25rem 0.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '4px',
                                     }}>
-                                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text-primary)' }}>{member.name}</span>
-                                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 700, color: member.foodCheckedIn ? '#00ff88' : '#ff3b30' }}>
+                                        <span style={{
+                                            fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--text-primary)',
+                                            overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0,
+                                        }}>{member.name}</span>
+                                        <span style={{
+                                            fontFamily: 'var(--font-mono)', fontSize: '0.5rem', fontWeight: 700,
+                                            color: member.foodCheckedIn ? '#00ff88' : '#ff3b30',
+                                            flexShrink: 0, marginLeft: '0.5rem',
+                                        }}>
                                             {member.foodCheckedIn ? '✓' : '✗'}
                                         </span>
                                     </div>
@@ -430,26 +504,32 @@ export default function PortalPage() {
                         </div>
                     </div>
 
-                    {/* Footer Actions (Parallax Z=30) */}
-                    <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(0,212,255,0.15)', background: 'rgba(0,0,0,0.2)', transform: 'translateZ(30px)' }}>
-                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                    {/* Footer Actions */}
+                    <div style={{
+                        padding: 'clamp(1rem, 3vw, 1.5rem)',
+                        borderTop: '1px solid rgba(0,212,255,0.15)',
+                        background: 'rgba(0,0,0,0.2)',
+                        transform: 'translateZ(30px)',
+                    }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                             {team.presentationUrl && (
                                 <GlitchButton label="SLIDES" href={team.presentationUrl} />
                             )}
-                            <GlitchButton label="CONTACT" onClick={() => alert('Organizer Signal Sent!')} variant="gold" href="#" />
+                            <GlitchButton label="BACK TO PORTAL" href="/portal" variant="gold" />
                         </div>
-                        <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.5rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>
+                        <div style={{ textAlign: 'center', marginTop: '0.8rem', fontSize: '0.45rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>
                             AUTHORIZED ACCESS ONLY • SECURE CONNECTION
                         </div>
                     </div>
 
-                    {/* Scanning Line Animation (Z=5) */}
+                    {/* Scanning Line Animation */}
                     <motion.div
                         style={{
-                            position: 'absolute', left: 0, right: 0, height: '2px', background: 'rgba(0,212,255,0.5)',
-                            boxShadow: '0 0 15px rgba(0,212,255,0.8)',
+                            position: 'absolute', left: 0, right: 0, height: '2px',
+                            background: `rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.5)`,
+                            boxShadow: `0 0 15px rgba(${team.category === 'HARDWARE' ? '255,107,53' : '0,212,255'},0.8)`,
                             zIndex: 10,
-                            transform: 'translateZ(5px)'
+                            transform: 'translateZ(5px)',
                         }}
                         animate={{ top: ['0%', '100%', '0%'] }}
                         transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
@@ -457,11 +537,20 @@ export default function PortalPage() {
                 </div>
             </motion.div>
 
-            {/* Map Below Card */}
+            {/* Venue Map Below Card */}
             {team.roomNumber && (
-                <div style={{ marginTop: '3rem', maxWidth: '450px', margin: '3rem auto 0' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '0.8rem', opacity: 0.7 }}>LOCATION DATA</div>
-                    <RoomMap roomNumber={team.roomNumber} />
+                <div style={{ marginTop: '2rem', maxWidth: '480px', margin: '2rem auto 0' }}>
+                    <div style={{
+                        textAlign: 'center',
+                        marginBottom: '0.8rem',
+                        fontSize: '0.7rem',
+                        opacity: 0.7,
+                        fontFamily: 'var(--font-mono)',
+                        letterSpacing: '0.1em',
+                    }}>
+                        VENUE LOCATION
+                    </div>
+                    <VenueMap venue={team.roomNumber} category={team.category} />
                 </div>
             )}
         </div>
