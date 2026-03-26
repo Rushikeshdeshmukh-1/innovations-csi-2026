@@ -1,0 +1,908 @@
+[
+  {
+    "teamName": "Team 404",
+    "members": [
+      {
+        "name": "PAVITRA BOGA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "AKSHATA CHETTIAR",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "KAVEESH KADIRVEL",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "TrioCoders",
+    "members": [
+      {
+        "name": "ISHITA POONJA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "POOJA SRIRAM",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "FALGUNI PATIL",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Memory miners",
+    "members": [
+      {
+        "name": "SHASHANK KUTTY",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "VINITA NARAYANAN",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SANJANA YADAV",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shashank Kutty",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Sanjana Yadav",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vinita Narayanan",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Synergy Squad",
+    "members": [
+      {
+        "name": "GOPIKHA G U",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "MAHARAJAN KONAR",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SOURISH KANNA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "NANDINI SHENDE",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Power Rangers",
+    "members": [
+      {
+        "name": "HARI SHANKAR IYER",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "AARTI CHETTIAR",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "KRISHNI SUBENTHIRAN",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "ANOUSHKA RAJESH",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Synapse",
+    "members": [
+      {
+        "name": "ADITYA WARADKAR",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "ADITYA RAMAN",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "MANAV SADH",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "PAVITHRA LOKESH",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Team Transformers",
+    "members": [
+      {
+        "name": "SHREYANSH CHAUHAN",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SHUBHAM DOMBALE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "TALHA PATRAWALA",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Dev Ally",
+    "members": [
+      {
+        "name": "YASH NIMSE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "ARYAN SHINDE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "AYUSH JAGTAP",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "NIRMAL DAREKAR",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "SolarX",
+    "members": [
+      {
+        "name": "ARYAAN PRADEEP GALA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "JASH KEYUR BARBHAYA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "RAJAT CHANDARANA",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "GURUDEV SINGH DHANJAL",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Algorithmic Alchemists",
+    "members": [
+      {
+        "name": "HARSH SANDIP AMBRE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "VISHAVAS DATTATRAY ICHAKE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SUJAL KISHOR PATIL",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "DHRUV RAVAL",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Aero Nova",
+    "members": [
+      {
+        "name": "ABEERAH KHAN",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "NIDHI BELOSHE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "HIMANSHU DWIVEDI",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "ADWITA PADHYE",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "BangerBrains",
+    "members": [
+      {
+        "name": "SHEVANTE PRAJWAL DIPIL",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "JATIN JAGANNATH SHEETY",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SHIVAM MANE",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "MONISH SASIKUMAR",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Grey-MatterX",
+    "members": [
+      {
+        "name": "Ajay Mudliyar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tanishq Mudaliyar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vignesh Valluvan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vasanth Nadar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Mad Mavericks",
+    "members": [
+      {
+        "name": "ANISH MANJREKAR",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shlok Dhawan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Bhushan Parab",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Likhit Rane",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Cicada Cipher",
+    "members": [
+      {
+        "name": "Aashika Nadar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Srushti Dhake",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Chandhru Nadar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Mugesh Nadar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "ZephyrBots",
+    "members": [
+      {
+        "name": "Ishita Singh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Pritesh Shetty",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Rehan Shaikh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Amey Shigam",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "QuadraCore",
+    "members": [
+      {
+        "name": "Arya Muthukrishnan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Dhrithi Moolya",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Nanmathi Balachandran",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Manikaraj Anburaj",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Om Sai Mitra Mandal",
+    "members": [
+      {
+        "name": "Gokul Srinivasan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Suthakar Anburaj",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tanmay Dhole",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Omkar Chavan",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Technoblade",
+    "members": [
+      {
+        "name": "Tushar Singh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shubham Singh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Niharika Singh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Bhoomi Sharma",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Abhiram",
+    "members": [
+      {
+        "name": "Abhiram Nair",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Aaditya",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vedant",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "CodeByte",
+    "members": [
+      {
+        "name": "Indrayani Patil",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Nishalini Kanthakumar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Khushi Patil",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Redstone Crafters",
+    "members": [
+      {
+        "name": "Naresh T",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vrushabh Shirke",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tirthesh Tandel",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "SriPranav Rajaram",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "CRUX",
+    "members": [
+      {
+        "name": "Abhijeet Shriniwas Sapar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tarun Rajeev Rajauria",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Kalash Paras Bheda",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Axasians",
+    "members": [
+      {
+        "name": "Akhilesh Badrinath",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Ananya Chakraborty",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Adhya Viju",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "EdgeVision",
+    "members": [
+      {
+        "name": "Nitya Nadar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Priyanka Vijaya Sundaram Gounder",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Imaad Fodkar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Karthika Thevar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Medifly",
+    "members": [
+      {
+        "name": "Aditya Koparkar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Samiksha Dhole",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Sarang Patil",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Inesh Banerjee",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Team WildSight",
+    "members": [
+      {
+        "name": "aarya varsolkar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shruti Subramanian",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Mitesh Naik",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "The visionaries",
+    "members": [
+      {
+        "name": "Monika Choudhary",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Ayaan Mulla",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Kunal Samanta",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Rahul Nadar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Code Catalysts",
+    "members": [
+      {
+        "name": "Purva Dutta",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Samruddhi Bhalekar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Anurag Thakur",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Harsh Mhatre",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "TechPulse",
+    "members": [
+      {
+        "name": "Sejal Vartak",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Ibrahim Abdul Ahad Khan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Janhvi Dhale",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Gandhar Bagde",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "SaccharoTech",
+    "members": [
+      {
+        "name": "Niha Solkar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shloka Suvarna",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Anshul Choudhari",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Shreeya Bhalerao",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "REDOXX",
+    "members": [
+      {
+        "name": "Anjali Nitin Samant",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Yashraj Arvind Tripathi",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Ankur Kumar Singh",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Good Fellas",
+    "members": [
+      {
+        "name": "Sudarshan Nadar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tanish Srinivasan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Steve Jason",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Illavarsu Thevar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Wealth Wizards",
+    "members": [
+      {
+        "name": "Krishant Arivalagan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Anurag Mohit",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Omkar Choughule",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Arjunan Swamynathan",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Code Wreckers",
+    "members": [
+      {
+        "name": "Dwithi Poojary",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Atharva Ketkar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Atharva Khandagale",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Sri Muthu Lakshmanan RK",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "Pseudo Bots",
+    "members": [
+      {
+        "name": "Amit Sunil Ramtri",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Harsh Dinesh Maghnani",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Deepesh Uttamchand Navani",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "TerraGuardians",
+    "members": [
+      {
+        "name": "Nimish Roge",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Hariom Mohare",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Maadeshselvan",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Manas Suryavanshi",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Synergy",
+    "members": [
+      {
+        "name": "Soham Somavanshi",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vishnu Vardhan Subramanyam",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Vinay Sawant",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Saran Rajasekhar",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "PDS26",
+    "members": [
+      {
+        "name": "Kesavan Kumar Mudaliyar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "K Nisharani Kamesh Babu",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Mahalakshmi Gounder",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "nishok ganapathy",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 1
+  },
+  {
+    "teamName": "Geosense",
+    "members": [
+      {
+        "name": "Iris Marshal Soj",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Piyush Deshmukh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Harsshita Vontivillu",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "MoneyMappers",
+    "members": [
+      {
+        "name": "Om Tawde",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Parth Varekar",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Sumit Singh",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Tanay Shinde",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 2
+  },
+  {
+    "teamName": "AlgoX",
+    "members": [
+      {
+        "name": "Vaishnavi Thorat",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Pavitra Warrier",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Namish Sharma",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Taazeen Ansari",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": 3
+  },
+  {
+    "teamName": "Vishal CJ",
+    "members": [
+      {
+        "name": "Vishal CJ",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Sabarish GK",
+        "foodCheckedIn": false
+      },
+      {
+        "name": "Ruban",
+        "foodCheckedIn": false
+      }
+    ],
+    "panel": "ONLINE "
+  }
+]

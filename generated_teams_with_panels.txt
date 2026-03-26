@@ -1,6 +1,3 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
 export interface Team {
     id: string;
     position: number;
@@ -526,7 +523,7 @@ const mockTeams: Team[] = [
         status: 'Under Review',
         score: 0,
         leads: ["Amit Sunil Ramtri"],
-        members: [{"name":"Amit Sunil Ramtri","foodCheckedIn":false},{"name":"Harsh Dinesh Maghnani","foodCheckedIn":false},{"name":"Deepesh Uttamchand Navani","foodCheckedIn":false},{"name":"Aayush Balip","foodCheckedIn":false}],
+        members: [{"name":"Amit Sunil Ramtri","foodCheckedIn":false},{"name":"Harsh Dinesh Maghnani","foodCheckedIn":false},{"name":"Deepesh Uttamchand Navani","foodCheckedIn":false}],
         foodCheckedIn: false,
         roomNumber: 'GST AUDI',
         panel: '2',
@@ -632,51 +629,3 @@ const mockTeams: Team[] = [
 ];
 
 export { mockTeams };
-
-export const useLeaderboardStore = create<LeaderboardState>()(
-    persist(
-        (set, get) => ({
-            teams: mockTeams,
-            updateTeamStatus: (id, status) =>
-                set((state) => ({
-                    teams: state.teams.map((t) => (t.id === id ? { ...t, status } : t)),
-                })),
-            getTeamById: (id) => get().teams.find((t) => t.id === id),
-            getTeamByName: (name) => {
-                const lower = name.toLowerCase().trim();
-                return get().teams.find((t) => t.teamName.toLowerCase() === lower);
-            },
-            toggleTeamFood: (id) =>
-                set((state) => ({
-                    teams: state.teams.map((t) =>
-                        t.id === id
-                            ? {
-                                ...t,
-                                foodCheckedIn: !t.foodCheckedIn,
-                                members: t.members.map((m) => ({
-                                    ...m,
-                                    foodCheckedIn: !t.foodCheckedIn,
-                                })),
-                            }
-                            : t
-                    ),
-                })),
-            toggleMemberFood: (teamId, memberName) =>
-                set((state) => ({
-                    teams: state.teams.map((t) => {
-                        if (t.id !== teamId) return t;
-                        const updatedMembers = t.members.map((m) =>
-                            m.name === memberName
-                                ? { ...m, foodCheckedIn: !m.foodCheckedIn }
-                                : m
-                        );
-                        const allCheckedIn = updatedMembers.every((m) => m.foodCheckedIn);
-                        return { ...t, members: updatedMembers, foodCheckedIn: allCheckedIn };
-                    }),
-                })),
-        }),
-        {
-            name: 'innovations-leaderboard',
-        }
-    )
-);
