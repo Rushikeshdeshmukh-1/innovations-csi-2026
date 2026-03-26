@@ -90,12 +90,17 @@ function HoloSelect({
 }
 
 /* ─── Venue Map (inline) ─── */
-function VenueMap({ venue, category }: { venue: string; category: string }) {
+function VenueMap({ venue, category, panel }: { venue: string; category: string; panel?: string }) {
     const isSoftware = category === 'SOFTWARE';
-    const venues = isSoftware ? ['GST AUDI', 'IEM'] : ['LAB-5', 'LAB-6', 'LAB-7'];
+    let venues: string[] = [];
+    if (panel === '1') venues = ['GST AUDI'];
+    else if (panel === '2') venues = ['LAB-5', 'LAB-6', 'LAB-7'];
+    else if (panel === '3') venues = ['IEM CONFERENCE ROOM'];
+    else venues = venue && venue !== 'ONLINE' ? [venue] : [];
+
     const venuePositions: Record<string, { x: number; y: number; w: number; h: number }> = {
-        'GST AUDI': { x: 30, y: 20, w: 120, h: 55 },
-        'IEM': { x: 180, y: 20, w: 120, h: 55 },
+        'GST AUDI': { x: 110, y: 20, w: 120, h: 55 },
+        'IEM CONFERENCE ROOM': { x: 90, y: 20, w: 160, h: 55 },
         'LAB-5': { x: 20, y: 20, w: 90, h: 55 },
         'LAB-6': { x: 125, y: 20, w: 90, h: 55 },
         'LAB-7': { x: 230, y: 20, w: 90, h: 55 },
@@ -442,7 +447,7 @@ function FullTeamCard({ team }: { team: Team }) {
                                 }}>
                                     📍 VENUE LOCATION
                                 </div>
-                                <VenueMap venue={team.roomNumber} category={team.category} />
+                                <VenueMap venue={team.roomNumber} category={team.category} panel={team.panel} />
                             </div>
                         )}
                     </div>
