@@ -756,6 +756,7 @@ export const useLeaderboardStore = create<LeaderboardState>()(
         }),
         {
             name: 'innovations-leaderboard',
+            version: 1, // Bumping version to invalidate old caches with 43 teams
         }
     )
 );
