@@ -321,7 +321,7 @@ function FullTeamCard({ team }: { team: Team }) {
                         {/* Stats Grid */}
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
                             gap: '0.5rem',
                             width: '100%',
                             marginBottom: '1rem',
@@ -329,7 +329,11 @@ function FullTeamCard({ team }: { team: Team }) {
                         }}>
                             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.6rem', borderRadius: '8px', textAlign: 'center' }}>
                                 <div style={{ fontSize: '0.45rem', color: 'var(--text-muted)', marginBottom: '0.15rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>VENUE</div>
-                                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold)', wordBreak: 'break-word' }}>{team.roomNumber || 'TBA'}</div>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-gold)', wordBreak: 'break-word' }}>{team.roomNumber || 'TBA'}</div>
+                            </div>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.6rem', borderRadius: '8px', textAlign: 'center' }}>
+                                <div style={{ fontSize: '0.45rem', color: 'var(--text-muted)', marginBottom: '0.15rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>PANEL</div>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.panel || 'TBA'}</div>
                             </div>
                             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.6rem', borderRadius: '8px', textAlign: 'center' }}>
                                 <div style={{ fontSize: '0.45rem', color: 'var(--text-muted)', marginBottom: '0.15rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>CATEGORY</div>
@@ -337,7 +341,7 @@ function FullTeamCard({ team }: { team: Team }) {
                             </div>
                             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.6rem', borderRadius: '8px', textAlign: 'center' }}>
                                 <div style={{ fontSize: '0.45rem', color: 'var(--text-muted)', marginBottom: '0.15rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>MEMBERS</div>
-                                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.members.length}</div>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{team.members.length}</div>
                             </div>
                         </div>
 
