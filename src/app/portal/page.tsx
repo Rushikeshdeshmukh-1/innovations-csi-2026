@@ -269,6 +269,37 @@ function FullTeamCard({ team }: { team: Team }) {
                         </div>
                     </div>
 
+                    {/* Registration Status Banner */}
+                    {team.deskCheckedIn ? (
+                        <div style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(0,255,136,0.15), transparent)',
+                            borderBottom: '1px solid rgba(0,255,136,0.3)',
+                            padding: '0.4rem',
+                            textAlign: 'center',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.55rem',
+                            color: '#00ff88',
+                            letterSpacing: '0.25em',
+                            fontWeight: 700,
+                            textShadow: '0 0 10px rgba(0,255,136,0.4)',
+                        }}>
+                            ◆ REGISTRATION VERIFIED ◈
+                        </div>
+                    ) : (
+                        <div style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(255,190,11,0.05), transparent)',
+                            borderBottom: '1px solid rgba(255,190,11,0.1)',
+                            padding: '0.4rem',
+                            textAlign: 'center',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: '0.55rem',
+                            color: '#FFBE0B',
+                            letterSpacing: '0.15em',
+                        }}>
+                            REGISTRATION PENDING
+                        </div>
+                    )}
+
                     {/* Main Content */}
                     <div style={{
                         padding: 'clamp(1rem, 3vw, 1.5rem)',

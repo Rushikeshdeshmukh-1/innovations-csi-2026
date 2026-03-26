@@ -10,12 +10,60 @@ export default function AdminDashboard() {
     const toggleTeamFood = useLeaderboardStore((s) => s.toggleTeamFood);
     const toggleMemberFood = useLeaderboardStore((s) => s.toggleMemberFood);
     const updateTeamStatus = useLeaderboardStore((s) => s.updateTeamStatus);
+    const toggleTeamDeskCheckIn = useLeaderboardStore((s) => s.toggleTeamDeskCheckIn);
+    
     const [mounted, setMounted] = useState(false);
     const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [passcode, setPasscode] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
-    useEffect(() => { setMounted(true); }, []);
+    useEffect(() => {
+        setMounted(true);
+        if (sessionStorage.getItem('adminAuth') === 'true') {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
     if (!mounted) return null;
+
+    if (!isAuthenticated) {
+        return (
+            <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', position: 'relative', zIndex: 10 }}>
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="holo-hud-card" style={{ padding: '3rem', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
+                    <h2 style={{ fontFamily: 'var(--font-header)', fontSize: '1.5rem', color: 'var(--accent-cyan)', marginBottom: '1rem' }}>ADMIN ACCESS</h2>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>Enter passcode to access the command center.</p>
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        if (passcode === 'CSIADMIN24') {
+                            sessionStorage.setItem('adminAuth', 'true');
+                            setIsAuthenticated(true);
+                        } else {
+                            setErrorMsg('ACCESS DENIED');
+                        }
+                    }}>
+                        <input
+                            type="password"
+                            value={passcode}
+                            onChange={(e) => { setPasscode(e.target.value); setErrorMsg(''); }}
+                            placeholder="PASSCODE"
+                            style={{
+                                width: '100%', padding: '12px', marginBottom: '1rem',
+                                background: 'rgba(0,0,0,0.5)', border: errorMsg ? '1px solid #ff3b30' : '1px solid rgba(0,212,255,0.3)',
+                                color: '#fff', outline: 'none', fontFamily: 'var(--font-mono)', textAlign: 'center', letterSpacing: '0.2em'
+                            }}
+                        />
+                        {errorMsg && <div style={{ color: '#ff3b30', fontSize: '0.65rem', fontFamily: 'var(--font-mono)', marginBottom: '1rem' }}>{errorMsg}</div>}
+                        <button type="submit" className="cyber-button" style={{ width: '100%', padding: '12px' }}>
+                            AUTHENTICATE
+                        </button>
+                    </form>
+                </motion.div>
+            </div>
+        );
+    }
 
     const filteredTeams = teams.filter((t) =>
         t.teamName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,6 +81,7 @@ export default function AdminDashboard() {
 
     const totalMembers = teams.reduce((acc, t) => acc + t.members.length, 0);
     const totalFoodChecked = teams.reduce((acc, t) => acc + t.members.filter((m) => m.foodCheckedIn).length, 0);
+    const totalDeskChecked = teams.filter(t => t.deskCheckedIn).length;
 
     return (
         <div style={{
@@ -114,8 +163,8 @@ export default function AdminDashboard() {
             }}>
                 {[
                     { label: 'TOTAL TEAMS', value: teams.length, color: 'var(--accent-cyan)' },
-                    { label: 'TOTAL MEMBERS', value: totalMembers, color: 'var(--accent-gold)' },
-                    { label: 'FOOD CHECKED IN', value: `${totalFoodChecked}/${totalMembers}`, color: totalFoodChecked === totalMembers ? '#00ff88' : '#FFBE0B' },
+                    { label: 'DESK C/I', value: `${totalDeskChecked}/${teams.length}`, color: totalDeskChecked === teams.length ? '#00ff88' : '#FFBE0B' },
+                    { label: 'FOOD RECVD', value: `${totalFoodChecked}/${totalMembers}`, color: totalFoodChecked === totalMembers ? '#00ff88' : 'var(--accent-gold)' },
                     { label: 'SHORTLISTED', value: teams.filter((t) => t.status === 'Shortlisted').length, color: '#00ff88' },
                 ].map((stat) => (
                     <motion.div
@@ -193,7 +242,7 @@ export default function AdminDashboard() {
                                 onClick={() => setExpandedTeam(isExpanded ? null : team.id)}
                                 style={{
                                     display: 'grid',
-                                    gridTemplateColumns: '2.5fr 2fr 1.5fr 1.5fr 1fr auto',
+                                    gridTemplateColumns: '2fr 1fr 1.2fr 1.2fr 1fr auto',
                                     alignItems: 'center',
                                     gap: '1rem',
                                     padding: '1rem 1.2rem',
@@ -253,6 +302,27 @@ export default function AdminDashboard() {
                                             </option>
                                         ))}
                                     </select>
+                                </div>
+
+                                {/* Desk Check-In */}
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <label onClick={(e) => e.stopPropagation()} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={team.deskCheckedIn}
+                                            onChange={(e) => {
+                                                e.stopPropagation();
+                                                toggleTeamDeskCheckIn(team.id);
+                                            }}
+                                            style={{ accentColor: 'var(--accent-cyan)', width: '16px', height: '16px', cursor: 'pointer' }}
+                                        />
+                                        <span style={{
+                                            fontFamily: 'var(--font-mono)', fontSize: '0.55rem',
+                                            color: team.deskCheckedIn ? 'var(--accent-cyan)' : 'var(--text-muted)', letterSpacing: '0.05em'
+                                        }}>
+                                            DESK CHECK-IN
+                                        </span>
+                                    </label>
                                 </div>
 
                                 {/* Food Status */}
