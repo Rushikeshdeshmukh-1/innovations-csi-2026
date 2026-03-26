@@ -633,6 +633,15 @@ const mockTeams: Team[] = [
 
 export { mockTeams };
 
+export interface LeaderboardState {
+    teams: Team[];
+    updateTeamStatus: (id: string, status: TeamStatus) => void;
+    getTeamById: (id: string) => Team | undefined;
+    getTeamByName: (name: string) => Team | undefined;
+    toggleTeamFood: (id: string) => void;
+    toggleMemberFood: (teamId: string, memberName: string) => void;
+}
+
 export const useLeaderboardStore = create<LeaderboardState>()(
     persist(
         (set, get) => ({
